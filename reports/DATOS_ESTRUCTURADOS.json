@@ -1,0 +1,68 @@
+{
+  "fecha_reporte": "2026-08-14T08:40:35.153128",
+  "periodo": {
+    "inicio": "2026-03-12 14:05:38",
+    "fin": "2026-08-11 13:32:01"
+  },
+  "resumen": {
+    "total_ingresos": 15864818.620000001,
+    "total_ordenes": 41,
+    "clientes_unicos": 35,
+    "ticket_promedio": 396620.46550000005,
+    "ticket_maximo": 1396000.0,
+    "ticket_minimo": 77302.0,
+    "vendedores": 1
+  },
+  "top_10_clientes": [
+    {
+      "cliente": "MARTINEZ ROSANA BEATRIZ",
+      "monto": 1396000.0,
+      "ordenes": 1
+    },
+    {
+      "cliente": "SVALDI MARTA GISELLE",
+      "monto": 1361100.0,
+      "ordenes": 1
+    },
+    {
+      "cliente": "AÑASCO ARIEL",
+      "monto": 1028000.0,
+      "ordenes": 3
+    },
+    {
+      "cliente": "SANDOBAL LORENA ANALIA",
+      "monto": 804600.0,
+      "ordenes": 1
+    },
+    {
+      "cliente": "BELTRAMO CATALINA NELIDA",
+      "monto": 698000.0,
+      "ordenes": 1
+    },
+    {
+      "cliente": "PARRADO PAULA PATRICIA",
+      "monto": 698000.0,
+      "ordenes": 2
+    },
+    {
+      "cliente": "VICENTE FROILAN COMIZZO",
+      "monto": 697999.87,
+      "ordenes": 1
+    },
+    {
+      "cliente": "LASCANO PIZARRO ANA INES",
+      "monto": 671669.69,
+      "ordenes": 1
+    },
+    {
+      "cliente": "WMS SERVICES SAS",
+      "monto": 552568.0,
+      "ordenes": 2
+    },
+    {
+      "cliente": "MARTINEZ GALAN YANETSI",
+      "monto": 500000.0,
+      "ordenes": 1
+    }
+  ]
+}

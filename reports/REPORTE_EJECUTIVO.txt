@@ -1,0 +1,76 @@
+
+====================================================================================================
+REPORTE EJECUTIVO DE VENTAS - FRONTERA LIVING S.A
+====================================================================================================
+
+GENERADO: 25/08/2026 08:31:21
+PERÍODO: 2026-07-09 09:36:44 a 2026-08-21 07:30:00
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+INDICADORES PRINCIPALES
+────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Total Ingresos:          $      369,368,664.12
+Número de Órdenes:                            80
+Clientes Únicos:                              71
+Ticket Promedio:         $        4,617,108.30
+Ticket Máximo:           $       76,112,962.99
+Ticket Mínimo:           $                0.35
+Vendedores:                                    8
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+TOP 10 CLIENTES
+────────────────────────────────────────────────────────────────────────────────────────────────────
+
+ 1. ROBERTO PICCA E HIJOS S.A.S.                  $111,192,261.34  ( 30.1%)  [4 órdenes]
+ 2. BENITEZ MATIAS                                $27,373,570.32  (  7.4%)  [1 órdenes]
+ 3. INFINITY SAS                                  $23,392,000.52  (  6.3%)  [3 órdenes]
+ 4. GUETE HECTOR DANIEL                           $16,425,321.47  (  4.4%)  [1 órdenes]
+ 5. BURLOTTI FEDERICO VICTOR                      $11,795,667.47  (  3.2%)  [1 órdenes]
+ 6. MARTIN DANIEL JOSE                            $11,142,365.11  (  3.0%)  [1 órdenes]
+ 7. GUTIERREZ LUCAS DAVID                         $ 9,065,020.75  (  2.5%)  [1 órdenes]
+ 8. S&L EQUIPAMIENTOS S.A.                        $ 9,011,102.16  (  2.4%)  [1 órdenes]
+ 9. SUEÑO LINDO S. A. S.                          $ 8,715,426.27  (  2.4%)  [1 órdenes]
+10. AVALOS LOURDES SOLEDAD                        $ 8,592,249.72  (  2.3%)  [1 órdenes]
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+INFORMACIÓN OPERATIVA
+────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Estados:
+   • Orden de venta: 63 órdenes (78.8%)
+   • Cotización: 11 órdenes (13.8%)
+   • Pendiente de aprobación: 6 órdenes (7.5%)
+
+Términos de Pago:
+   • 30, 60, 90 y 120 días: 33 órdenes (41.2%)
+   • Presupuesto: 31 órdenes (38.8%)
+   • 30, 60, 90, 120, y 150 días: 6 órdenes (7.5%)
+   • Pago anticipado: 3 órdenes (3.8%)
+   • 30 días: 3 órdenes (3.8%)
+   • 20 días: 2 órdenes (2.5%)
+   • 30, 60, 90 días: 2 órdenes (2.5%)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+CONCLUSIONES Y RECOMENDACIONES
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+1. RETENCIÓN DE TOP CLIENTES
+   Top 5 clientes generan 51.5% de ingresos
+   → Implementar account management dedicado
+
+2. DIVERSIFICACIÓN DE CARTERA
+   → Captar nuevos clientes para reducir riesgo
+
+3. EXPANSIÓN DE FUERZA DE VENTAS
+   Actualmente 8 vendedor(es)
+   → Considerar expansion del equipo de ventas
+
+4. PROGRAMA DE FIDELIZACIÓN
+   Muchos clientes tienen una única orden
+   → Implementar programa de repetición
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Generado automáticamente por Sistema de Reportes Frontera Living
+2026
+════════════════════════════════════════════════════════════════════════════════════════════════════

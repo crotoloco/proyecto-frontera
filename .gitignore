@@ -1,0 +1,20 @@
+# Credenciales y configuración local
+.env
+
+# Entornos virtuales
+.venv/
+venv/
+
+# Cachés de Python
+__pycache__/
+*.py[cod]
+
+# Logs locales
+logs/
+
+# Archivos temporales de Excel
+~$*.xlsx
+
+# Archivos temporales del sistema
+.DS_Store
+Thumbs.db

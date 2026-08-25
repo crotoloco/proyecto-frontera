@@ -1,0 +1,64 @@
+{
+  "fecha_generacion": "2026-08-25T08:31:21.274860",
+  "resumen": {
+    "total_ingresos": 369368664.12,
+    "total_ordenes": 80,
+    "clientes_unicos": 71,
+    "ticket_promedio": 4617108.3015,
+    "ticket_maximo": 76112962.99,
+    "ticket_minimo": 0.35,
+    "vendedores": 8
+  },
+  "top_10_clientes": [
+    {
+      "cliente": "ROBERTO PICCA E HIJOS S.A.S.",
+      "monto": 111192261.34,
+      "ordenes": 4
+    },
+    {
+      "cliente": "BENITEZ MATIAS",
+      "monto": 27373570.32,
+      "ordenes": 1
+    },
+    {
+      "cliente": "INFINITY SAS",
+      "monto": 23392000.52,
+      "ordenes": 3
+    },
+    {
+      "cliente": "GUETE HECTOR DANIEL",
+      "monto": 16425321.47,
+      "ordenes": 1
+    },
+    {
+      "cliente": "BURLOTTI FEDERICO VICTOR",
+      "monto": 11795667.47,
+      "ordenes": 1
+    },
+    {
+      "cliente": "MARTIN DANIEL JOSE",
+      "monto": 11142365.11,
+      "ordenes": 1
+    },
+    {
+      "cliente": "GUTIERREZ LUCAS DAVID",
+      "monto": 9065020.75,
+      "ordenes": 1
+    },
+    {
+      "cliente": "S&L EQUIPAMIENTOS S.A.",
+      "monto": 9011102.16,
+      "ordenes": 1
+    },
+    {
+      "cliente": "SUEÑO LINDO S. A. S.",
+      "monto": 8715426.27,
+      "ordenes": 1
+    },
+    {
+      "cliente": "AVALOS LOURDES SOLEDAD",
+      "monto": 8592249.72,
+      "ordenes": 1
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+    'name': 'Frontera Dashboard',
+    'version': '16.0.1.0.0',
+    'category': 'Sales',
+    'summary': 'Dashboard ejecutivo para ventas, inventario, producción y reparaciones',
+    'author': 'Frontera Living',
+    'depends': [
+        'base',
+        'sale',
+        'account',
+        'stock',
+        'mrp',
+        'repair',
+    ],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/dashboard_views.xml',
+        'views/dashboard_kanban.xml',
+        'data/ir_actions_server.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    'website': 'https://www.fronteraliving.com',
+}

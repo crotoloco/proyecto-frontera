@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- VISTA FORMULARIO DEL KPI -->
+    <record id="view_dashboard_kpi_form" model="ir.ui.view">
+        <field name="name">dashboard.kpi.form</field>
+        <field name="model">dashboard.kpi</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="category"/>
+                            <field name="period"/>
+                            <field name="value" widget="monetary"/>
+                        </group>
+                        <group>
+                            <field name="target" widget="monetary"/>
+                            <field name="completion_percentage" widget="progress_bar"/>
+                            <field name="status" widget="badge"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Estado">
+                            <field name="pending_count"/>
+                            <field name="delayed_count"/>
+                        </group>
+                        <group>
+                            <field name="completed_count"/>
+                            <field name="last_update"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- VISTA KANBAN - TABLERO EJECUTIVO -->
+    <record id="view_dashboard_kpi_kanban" model="ir.ui.view">
+        <field name="name">dashboard.kpi.kanban</field>
+        <field name="model">dashboard.kpi</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_dashboard">
+                <field name="category"/>
+                <field name="completion_percentage"/>
+                <field name="status"/>
+                <field name="delayed_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card {{record.status.raw_value}}">
+                            <div class="oe_kanban_content">
+                                <h4>
+                                    <field name="name"/>
+                                </h4>
+                                <p>
+                                    <strong>
+                                        <field name="value"/> / <field name="target"/>
+                                    </strong>
+                                </p>
+                                <div class="oe_kanban_footer">
+                                    <span class="oe_kanban_left">
+                                        <field name="completion_percentage" widget="progress_bar"/>
+                                    </span>
+                                </div>
+                                <div t-if="record.delayed_count.raw_value > 0" class="alert alert-danger">
+                                    ⚠️ <field name="delayed_count"/> Atrasados
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- VISTA ÁRBOL/LISTA -->
+    <record id="view_dashboard_kpi_tree" model="ir.ui.view">
+        <field name="name">dashboard.kpi.tree</field>
+        <field name="model">dashboard.kpi</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false">
+                <field name="name"/>
+                <field name="category"/>
+                <field name="period"/>
+                <field name="value" widget="monetary"/>
+                <field name="target" widget="monetary"/>
+                <field name="completion_percentage" widget="progress_bar"/>
+                <field name="status" widget="badge"/>
+                <field name="delayed_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- VISTA SEARCH/FILTROS -->
+    <record id="view_dashboard_kpi_search" model="ir.ui.view">
+        <field name="name">dashboard.kpi.search</field>
+        <field name="model">dashboard.kpi</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="status"/>
+                <separator/>
+                <filter name="filter_sales" string="Ventas" domain="[('category', '=', 'sales')]"/>
+                <filter name="filter_inventory" string="Inventario" domain="[('category', '=', 'inventory')]"/>
+                <filter name="filter_production" string="Producción" domain="[('category', '=', 'production')]"/>
+                <filter name="filter_repair" string="Reparaciones" domain="[('category', '=', 'repair')]"/>
+                <separator/>
+                <filter name="filter_critical" string="Críticos" domain="[('status', '=', 'danger')]"/>
+                <filter name="filter_warning" string="Atención" domain="[('status', '=', 'warning')]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_category" string="Categoría" context="{'group_by': 'category'}"/>
+                    <filter name="group_status" string="Estado" context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ACCIÓN VENTANA PRINCIPAL -->
+    <record id="action_dashboard_kpi_main" model="ir.actions.act_window">
+        <field name="name">Dashboard Frontera Living</field>
+        <field name="res_model">dashboard.kpi</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_id" ref="view_dashboard_kpi_kanban"/>
+        <field name="context">{'group_by': 'category'}</field>
+    </record>
+
+    <!-- MENÚ -->
+    <menuitem id="menu_frontera_dashboard_root" name="📊 Frontera Dashboard" sequence="5"/>
+    <menuitem id="menu_dashboard_kpi" name="Dashboard Ejecutivo" parent="menu_frontera_dashboard_root" action="action_dashboard_kpi_main" sequence="1"/>
+    
+</odoo>

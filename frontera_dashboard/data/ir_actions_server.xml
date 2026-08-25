@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ACCIÓN DE SERVIDOR PARA ACTUALIZAR MANUALMENTE -->
+    <record id="action_refresh_frontera_dashboard" model="ir.actions.server">
+        <field name="name">Actualizar Dashboard Frontera Living</field>
+        <field name="model_id" ref="model_dashboard_kpi"/>
+        <field name="state">code</field>
+        <field name="code">
+env['dashboard.kpi'].refresh_dashboard()
+        </field>
+    </record>
+
+    <!-- CRON: ACTUALIZAR DASHBOARD CADA 30 MINUTOS -->
+    <record id="cron_refresh_frontera_dashboard" model="ir.cron">
+        <field name="name">Actualizar KPIs Frontera Dashboard</field>
+        <field name="model_id" ref="model_dashboard_kpi"/>
+        <field name="state">code</field>
+        <field name="code">env['dashboard.kpi'].refresh_dashboard()</field>
+        <field name="interval_number">30</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

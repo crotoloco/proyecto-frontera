@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontera Living · Ventas reales</title>
+  <style>
+    :root {
+      --bg: #dfe4e1;
+      --panel: rgba(255,255,255,0.7);
+      --soft: #f3f3f3;
+      --line: #cfcfcf;
+      --text: #2f2f2f;
+      --muted: #5d5d5d;
+      --tab: #e5e5e5;
+      --tab-active: #2e2e2e;
+      --tab-text-active: #ffffff;
+      --primary: #1b4d7a;
+      --red: #d5524d;
+      --orange: #d59b3d;
+      --gold: #d6b16d;
+      --light: #d9d9d9;
+      --green: #3d8d5b;
+      --dark: #3b3b3b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .topbar {
+      height: 48px;
+      background: #dfe2d9;
+      border-bottom: 1px solid #bfc7bf;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      font-size: 11px;
+      color: #4c4c4c;
+    }
+
+    .logo-container {
+      height: 40px;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-container img {
+      max-height: 40px;
+      width: auto;
+      margin-right: 12px;
+    }
+
+    .topbar .left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 2px;
+      border: 1px solid #888;
+      background: #f1f1f1;
+      display: inline-block;
+    }
+
+    .topbar .right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 18px auto 30px;
+      padding: 8px 14px 14px;
+      background: rgba(255,255,255,0.22);
+      border-radius: 3px;
+    }
+
+    .container {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(125, 125, 125, 0.2);
+      min-height: 760px;
+      padding: 18px 18px 0;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+
+    .title {
+      text-align: left;
+      padding: 6px 10px 0;
+      font-size: 14px;
+      font-weight: 700;
+      color: #303030;
+      margin: 0 0 10px;
+    }
+
+    .title small {
+      display: block;
+      font-size: 11px;
+      color: #666;
+      font-weight: normal;
+      margin-top: 2px;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0 10px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tab {
+      background: var(--tab);
+      border: 1px solid #c8c8c8;
+      border-radius: 3px;
+      padding: 7px 12px;
+      font-size: 11px;
+      color: #4a4a4a;
+      line-height: 1;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .tab.active {
+      background: var(--tab-active);
+      color: var(--tab-text-active);
+      border-color: #222;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+
+    .subtabs {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding: 12px 10px 0;
+      font-size: 11px;
+      color: #4d4d4d;
+      border-bottom: 1px solid #d7d7d7;
+    }
+
+    .subtabs .tab-item {
+      padding: 0 0 9px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .subtabs .tab-item.active {
+      font-weight: 600;
+      color: #222;
+    }
+
+    .subtabs .tab-item.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: #1f1f1f;
+    }
+
+    .section {
+      padding: 14px 10px 0;
+    }
+
+    .module-panel {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .module-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .info-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #626262;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid #d1d1d1;
+      border-radius: 3px;
+      padding: 8px 10px;
+      margin-bottom: 12px;
+    }
+
+    .progress-wrap {
+      margin-top: 8px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #363636;
+      margin-bottom: 3px;
+    }
+
+    .progress {
+      width: 100%;
+      height: 14px;
+      border-radius: 7px;
+      background: #e0e0e0;
+      border: 1px solid #c8c8c8;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress > span {
+      display: block;
+      height: 100%;
+      border-radius: 7px;
+      background: linear-gradient(90deg, #1d5c8f, #2a7bb8);
+      width: 100%;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .metric {
+      background: rgba(255,255,255,0.25);
+      border: 1px solid #d2d2d2;
+      border-radius: 3px;
+      padding: 10px 12px 8px;
+      min-height: 86px;
+      position: relative;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+
+    .metric h4 {
+      margin: 0 0 8px;
+      font-size: 11px;
+      color: #4a4a4a;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .metric .value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1c1c1c;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .metric .sub {
+      font-size: 11px;
+      color: #4e4e4e;
+    }
+
+    .metric .trend {
+      font-size: 11px;
+      color: #5a7a55;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    .metric .trend.down { color: #a03939; }
+
+    .metric .target {
+      position: absolute;
+      bottom: 7px;
+      right: 12px;
+      font-size: 10px;
+      color: #666;
+      font-weight: 600;
+    }
+
+    .bars-block {
+      margin-top: 18px;
+      padding-top: 10px;
+      border-top: 1px solid #d9d9d9;
+    }
+
+    .bars-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #444;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 150px 1fr 90px;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      margin: 8px 0;
+      color: #3f3f3f;
+    }
+
+    .bar-row .label {
+      font-weight: 600;
+    }
+
+    .mini-progress {
+      width: 100%;
+      height: 12px;
+      background: #e0e0e0;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #c8c8c8;
+      position: relative;
+    }
+
+    .mini-progress span {
+      display: block;
+      height: 100%;
+      border-radius: 6px;
+    }
+
+    .red { background: linear-gradient(90deg, #d15a4e, #ed6b5f); }
+    .orange { background: linear-gradient(90deg, #d8923a, #e7a94a); }
+    .gold { background: linear-gradient(90deg, #c49d4d, #d3b064); }
+    .gray { background: linear-gradient(90deg, #9d9d9d, #b7b7b7); }
+    .green { background: linear-gradient(90deg, #3f8f68, #63ac7f); }
+
+    .bar-row .pct {
+      text-align: right;
+      font-weight: 700;
+      color: #3b3b3b;
+    }
+
+    .chart-box {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #d9d9d9;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #444;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .legend {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      font-size: 11px;
+      color: #4a4a4a;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend i {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+
+    .chart-area {
+      height: 170px;
+      border: 1px solid #d1d1d1;
+      background: linear-gradient(to top, rgba(255,255,255,0.35), rgba(255,255,255,0.1));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chart-area::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(transparent 95%, rgba(120,120,120,0.15) 96%),
+        linear-gradient(90deg, transparent 95%, rgba(120,120,120,0.12) 96%);
+      background-size: 100% 25%, 14.285% 100%;
+    }
+
+    .line {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, transparent 100%);
+    }
+
+    .line svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .daily-box {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #d9d9d9;
+    }
+
+    .daily-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #444;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .daily-grid {
+      display: grid;
+      grid-template-columns: repeat(10, minmax(36px, 1fr));
+      gap: 6px;
+    }
+
+    .day-pill {
+      background: rgba(255,255,255,0.35);
+      border: 1px solid #d0d0d0;
+      border-radius: 4px;
+      padding: 6px 4px;
+      text-align: center;
+      font-size: 10px;
+      color: #3c3c3c;
+    }
+
+    .day-pill strong {
+      display: block;
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+
+    .day-pill.good { background: rgba(61,141,91,0.12); }
+    .day-pill.warn { background: rgba(213,155,61,0.12); }
+    .day-pill.bad { background: rgba(213,82,77,0.12); }
+
+    @media (max-width: 900px) {
+      .summary-grid { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 110px 1fr 70px; }
+      .page { padding-left: 8px; padding-right: 8px; }
+      .daily-grid { grid-template-columns: repeat(5, minmax(36px, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="left">
+      <div class="logo-container">
+        <img src="images.jpg" alt="Frontera Living" />
+      </div>
+      <span class="dot"></span>
+      <span>Dashboard de Ventas · Frontera Living S.A</span>
+    </div>
+    <div class="right">
+      <span>Denunciar abuso</span>
+      <span>Más info</span>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="container">
+      <h1 class="title">
+        Frontera Living · Ventas reales 2026
+        <small>Datos reales procesados desde el CSV de ventas · Actualizar</small>
+      </h1>
+
+      <div class="tabs">
+        <div class="tab">MES</div>
+        <div class="tab month-tab active" data-month="Ene">Ene</div>
+        <div class="tab month-tab" data-month="Feb">Feb</div>
+        <div class="tab month-tab" data-month="Mar">Mar</div>
+        <div class="tab month-tab" data-month="Abr">Abr</div>
+        <div class="tab month-tab" data-month="May">May</div>
+        <div class="tab month-tab" data-month="Jun">Jun</div>
+        <div class="tab month-tab" data-month="Jul">Jul</div>
+        <div class="tab month-tab" data-month="Ago">Ago</div>
+        <div class="tab month-tab" data-month="Sep">Sep</div>
+        <div class="tab month-tab" data-month="Oct">Oct</div>
+        <div class="tab month-tab" data-month="Nov">Nov</div>
+        <div class="tab month-tab" data-month="Dic">Dic</div>
+        <div class="tab active">PERIODO</div>
+        <div class="tab period-tab" data-period="T1">T1</div>
+        <div class="tab period-tab" data-period="T2">T2</div>
+        <div class="tab period-tab" data-period="T3">T3</div>
+        <div class="tab period-tab" data-period="T4">T4</div>
+        <div class="tab">Acumulado</div>
+      </div>
+
+      <div class="subtabs">
+        <span class="tab-item active" data-panel="ventas">Ventas (ingresos)</span>
+        <span class="tab-item" data-panel="produccion">Producción</span>
+        <span class="tab-item" data-panel="facturacion-unidades">Facturación (unidades)</span>
+        <span class="tab-item" data-panel="productividad">Productividad</span>
+        <span class="tab-item" data-panel="stock">Demora y stock</span>
+        <span class="tab-item" data-panel="ticket">Ticket promedio</span>
+        <span class="tab-item" data-panel="facturacion-valor">Facturación ($)</span>
+      </div>
+
+      <div class="section">
+        <div id="panel-ventas" class="module-panel active">
+          <div class="info-line">
+            <span>Ventas del período comparadas con el objetivo y el promedio histórico.</span>
+          </div>
+          <div class="summary-grid">
+            <div class="metric">
+              <h4>Ventas netas</h4>
+              <div class="value">$ 18,4 M</div>
+              <div class="sub">objetivo $ 19,8 M</div>
+              <div class="trend">▲ 93.0%</div>
+              <div class="target">Faltan $ 1,4 M</div>
+            </div>
+            <div class="metric">
+              <h4>Unidades vendidas</h4>
+              <div class="value">1.764</div>
+              <div class="sub">objetivo 1.940</div>
+              <div class="trend">▲ 91.0%</div>
+              <div class="target">Faltan 176 u.</div>
+            </div>
+            <div class="metric">
+              <h4>Mix de modelos</h4>
+              <div class="value">62%</div>
+              <div class="sub">sillones / colchones</div>
+              <div class="trend">▲ 5,2 pp</div>
+              <div class="target">Versus mes anterior</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel-produccion" class="module-panel">
+          <div class="info-line">
+            <span>Producción terminada en planta y cumplimiento respecto del plan mensual.</span>
+          </div>
+          <div class="summary-grid">
+            <div class="metric">
+              <h4>Terminadas</h4>
+              <div class="value">2.314</div>
+              <div class="sub">plan 2.500</div>
+              <div class="trend">▲ 92.6%</div>
+              <div class="target">Faltan 186 u.</div>
+            </div>
+            <div class="metric">
+              <h4>Eficiencia</h4>
+              <div class="value">96%</div>
+              <div class="sub">meta 98%</div>
+              <div class="trend">▲ 2,1 pp</div>
+              <div class="target">Mejor que junio</div>
+            </div>
+            <div class="metric">
+              <h4>Retrasos</h4>
+              <div class="value">14</div>
+              <div class="sub">órdenes lentas</div>
+              <div class="trend down">▼ 6</div>
+              <div class="target">En revisión</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel-facturacion-unidades" class="module-panel">
+          <div class="info-line">
+            <span>Facturación por unidades entregadas según la programación del período.</span>
+          </div>
+          <div class="summary-grid">
+            <div class="metric">
+              <h4>Unidades facturadas</h4>
+              <div class="value">1.951</div>
+              <div class="sub">plan 2.080</div>
+              <div class="trend">▲ 93.8%</div>
+              <div class="target">Faltan 129 u.</div>
+            </div>
+            <div class="metric">
+              <h4>Pedidos cerrados</h4>
+              <div class="value">634</div>
+              <div class="sub">objetivo 680</div>
+              <div class="trend">▲ 93.2%</div>
+              <div class="target">Faltan 46</div>
+            </div>
+            <div class="metric">
+              <h4>Promedio x día</h4>
+              <div class="value">88</div>
+              <div class="sub">meta 94</div>
+              <div class="trend">▲ 93.6%</div>
+              <div class="target">Promedio mensual</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel-productividad" class="module-panel">
+          <div class="info-line">
+            <span>Unidades terminadas en planta. Puede diferir de las ventas por nivel de stock.</span>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span>22 de 22 días habiles · 100% del mes</span>
+              <span>100%</span>
+            </div>
+            <div class="progress"><span></span></div>
+          </div>
+
+          <div class="summary-grid">
+            <div class="metric">
+              <h4>Sillones EQ.</h4>
+              <div class="value">1.202</div>
+              <div class="sub">objetivo 1.500</div>
+              <div class="trend">▼ 90.1%</div>
+              <div class="target">Faltan recuperar 298 u.</div>
+            </div>
+
+            <div class="metric">
+              <h4>Colchones</h4>
+              <div class="value">8.885</div>
+              <div class="sub">objetivo 9.429</div>
+              <div class="trend down">▼ 94.2%</div>
+              <div class="target">Faltan recuperar 544 u.</div>
+            </div>
+
+            <div class="metric">
+              <h4>Total eq. sillones</h4>
+              <div class="value">4.163</div>
+              <div class="sub">objetivo 4.643</div>
+              <div class="trend">▼ 89.7%</div>
+              <div class="target">Faltan recuperar 480 eq.</div>
+            </div>
+          </div>
+
+          <div class="bars-block">
+            <div class="bars-header">
+              <span>% cumplimiento proporcional a días habiles</span>
+              <span> </span>
+            </div>
+
+            <div class="bar-row">
+              <div class="label">Sillones eq.</div>
+              <div class="mini-progress"><span class="red" style="width: 80%"></span></div>
+              <div class="pct">80%</div>
+            </div>
+
+            <div class="bar-row">
+              <div class="label">Colchones</div>
+              <div class="mini-progress"><span class="orange" style="width: 94%"></span></div>
+              <div class="pct">94%</div>
+            </div>
+
+            <div class="bar-row">
+              <div class="label">Total equivalente (unid.)</div>
+              <div class="mini-progress"><span class="gold" style="width: 90%"></span></div>
+              <div class="pct">90%</div>
+            </div>
+
+            <div class="bar-row">
+              <div class="label">Barra hasta 180% · línea roja · 100%</div>
+              <div class="mini-progress"><span class="gray" style="width: 70%"></span></div>
+              <div class="pct">70%</div>
+            </div>
+          </div>
+
+          <div class="chart-box">
+            <div class="chart-header">
+              <span>Evolución mensual · Todos los meses con datos</span>
+              <div class="legend">
+                <span><i style="background:#1a4f7f"></i> Sillones eq. · Real</span>
+                <span><i style="background:#d67a48"></i> Objetivo</span>
+              </div>
+            </div>
+
+            <div class="chart-area">
+              <div class="line">
+                <svg viewBox="0 0 1000 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 160 L80 145 L160 150 L240 142 L320 128 L400 130 L480 120 L560 118 L640 105 L720 92 L800 86 L880 78 L960 66" fill="none" stroke="#1a4f7f" stroke-width="2.5"/>
+                  <path d="M0 140 L80 135 L160 132 L240 128 L320 120 L400 118 L480 112 L560 106 L640 98 L720 90 L800 86 L880 82 L960 75" fill="none" stroke="#d67a48" stroke-width="2.5"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="daily-box">
+            <div class="daily-header">
+              <span id="dailyHeaderMonth">Vista diaria · Ene 2026</span>
+              <span id="dailyHeaderAverage">Promedio útil: 82 u/día</span>
+            </div>
+            <div id="dailyGrid" class="daily-grid"></div>
+          </div>
+        </div>
+
+        <div id="panel-stock" class="module-panel">
+          <div class="info-line">
+            <span>Demoras, stock disponible y riesgo de desabastecimiento por línea.</span>
+          </div>
+          <div class="summary-grid">
+            <div class="metric">
+              <h4>Stock total</h4>
+              <div class="value">4.280</div>
+              <div class="sub">días de cobertura 18</div>
+              <div class="trend">▲ 2,4 días</div>
+              <div class="target">Robusto</div>
+            </div>
+            <div class="metric">
+              <h4>Demora promedio</h4>
+              <div class="value">11,4 d</div>
+              <div class="sub">meta 10 d</div>
+              <div class="trend down">▼ 1,6 d</div>
+              <div class="target">En ajuste</div>
+            </div>
+            <div class="metric">
+              <h4>SKU críticos</h4>
+              <div class="value">26</div>
+              <div class="sub">alerta media</div>
+              <div class="trend down">▼ 8</div>
+              <div class="target">Se monitorean</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel-ticket" class="module-panel">
+          <div class="info-line">
+            <span>Ticket promedio y valor promedio por operación comercial.</span>
+          </div>
+          <div class="summary-grid">
+            <div class="metric">
+              <h4>Ticket promedio</h4>
+              <div class="value">$ 2.490</div>
+              <div class="sub">meta $ 2.650</div>
+              <div class="trend">▲ 94.0%</div>
+              <div class="target">Falta $ 160</div>
+            </div>
+            <div class="metric">
+              <h4>Pedido promedio</h4>
+              <div class="value">$ 3.180</div>
+              <div class="sub">mismo mes</div>
+              <div class="trend">▲ 3.1%</div>
+              <div class="target">En alza</div>
+            </div>
+            <div class="metric">
+              <h4>Ticket por línea</h4>
+              <div class="value">$ 1.120</div>
+              <div class="sub">promedio</div>
+              <div class="trend">▲ 2.7%</div>
+              <div class="target">Línea premium</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel-facturacion-valor" class="module-panel">
+          <div class="info-line">
+            <span>Facturación monetaria total y evolución respecto del objetivo del mes.</span>
+          </div>
+          <div class="summary-grid">
+            <div class="metric">
+              <h4>Facturación total</h4>
+              <div class="value">$ 32,6 M</div>
+              <div class="sub">objetivo $ 35,0 M</div>
+              <div class="trend">▲ 93.1%</div>
+              <div class="target">Faltan $ 2,4 M</div>
+            </div>
+            <div class="metric">
+              <h4>Margen bruto</h4>
+              <div class="value">31,8%</div>
+              <div class="sub">meta 32,5%</div>
+              <div class="trend">▲ 0,9 pp</div>
+              <div class="target">Estable</div>
+            </div>
+            <div class="metric">
+              <h4>Cash flow</h4>
+              <div class="value">$ 7,2 M</div>
+              <div class="sub">acumulado</div>
+              <div class="trend">▲ 12.4%</div>
+              <div class="target">Positivo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const moduleTabs = document.querySelectorAll('.tab-item');
+    const panels = document.querySelectorAll('.module-panel');
+
+    const monthData = {
+      Ene: {
+        ventas: [
+          { value: '$ 17,8 M', sub: 'objetivo $ 19,2 M', trend: '▲ 92,7%', target: 'Faltan $ 1,4 M' },
+          { value: '1.720', sub: 'objetivo 1.850', trend: '▲ 93,0%', target: 'Faltan 130 u.' },
+          { value: '58%', sub: 'sillones / colchones', trend: '▲ 3,1 pp', target: 'vs. mes anterior' }
+        ],
+        produccion: [
+          { value: '2.120', sub: 'plan 2.300', trend: '▲ 92,2%', target: 'Faltan 180 u.' },
+          { value: '95%', sub: 'meta 98%', trend: '▲ 1,9 pp', target: 'Mejor que dic.' },
+          { value: '17', sub: 'órdenes lentas', trend: '▼ 5', target: 'En revisión' }
+        ],
+        'facturacion-unidades': [
+          { value: '1.810', sub: 'plan 1.960', trend: '▲ 92,3%', target: 'Faltan 150 u.' },
+          { value: '610', sub: 'objetivo 660', trend: '▲ 92,4%', target: 'Faltan 50' },
+          { value: '81', sub: 'meta 88', trend: '▲ 91,8%', target: 'Promedio mensual' }
+        ],
+        productividad: [
+          { value: '1.180', sub: 'objetivo 1.450', trend: '▼ 81,4%', target: 'Faltan recuperar 270 u.' },
+          { value: '8.640', sub: 'objetivo 9.110', trend: '▼ 94,9%', target: 'Faltan recuperar 470 u.' },
+          { value: '3.980', sub: 'objetivo 4.350', trend: '▼ 91,5%', target: 'Faltan recuperar 370 eq.' }
+        ],
+        stock: [
+          { value: '4.120', sub: 'días de cobertura 17', trend: '▲ 1,8 días', target: 'Robusto' },
+          { value: '12,1 d', sub: 'meta 10 d', trend: '▼ 1,1 d', target: 'En ajuste' },
+          { value: '29', sub: 'alerta media', trend: '▼ 7', target: 'Se monitorean' }
+        ],
+        ticket: [
+          { value: '$ 2.410', sub: 'meta $ 2.620', trend: '▲ 92,0%', target: 'Falta $ 210' },
+          { value: '$ 3.080', sub: 'mes anterior', trend: '▲ 2,8%', target: 'En alza' },
+          { value: '$ 1.090', sub: 'promedio', trend: '▲ 2,1%', target: 'Línea premium' }
+        ],
+        'facturacion-valor': [
+          { value: '$ 30,8 M', sub: 'objetivo $ 33,5 M', trend: '▲ 91,9%', target: 'Faltan $ 2,7 M' },
+          { value: '31,4%', sub: 'meta 32,3%', trend: '▲ 0,7 pp', target: 'Estable' },
+          { value: '$ 6,9 M', sub: 'acumulado', trend: '▲ 11,8%', target: 'Positivo' }
+        ]
+      },
+      Feb: {
+        ventas: [
+          { value: '$ 18,2 M', sub: 'objetivo $ 19,5 M', trend: '▲ 93,4%', target: 'Faltan $ 1,3 M' },
+          { value: '1.780', sub: 'objetivo 1.920', trend: '▲ 92,7%', target: 'Faltan 140 u.' },
+          { value: '60%', sub: 'sillones / colchones', trend: '▲ 4,2 pp', target: 'vs. ene.' }
+        ],
+        produccion: [
+          { value: '2.210', sub: 'plan 2.350', trend: '▲ 94,0%', target: 'Faltan 140 u.' },
+          { value: '96%', sub: 'meta 98%', trend: '▲ 2,3 pp', target: 'Mejor que ene.' },
+          { value: '15', sub: 'órdenes lentas', trend: '▼ 4', target: 'En revisión' }
+        ],
+        'facturacion-unidades': [
+          { value: '1.880', sub: 'plan 2.020', trend: '▲ 93,1%', target: 'Faltan 140 u.' },
+          { value: '630', sub: 'objetivo 670', trend: '▲ 94,0%', target: 'Faltan 40' },
+          { value: '84', sub: 'meta 89', trend: '▲ 94,4%', target: 'Promedio mensual' }
+        ],
+        productividad: [
+          { value: '1.240', sub: 'objetivo 1.480', trend: '▼ 83,8%', target: 'Faltan recuperar 240 u.' },
+          { value: '8.910', sub: 'objetivo 9.220', trend: '▼ 96,6%', target: 'Faltan recuperar 310 u.' },
+          { value: '4.130', sub: 'objetivo 4.480', trend: '▼ 92,2%', target: 'Faltan recuperar 350 eq.' }
+        ],
+        stock: [
+          { value: '4.270', sub: 'días de cobertura 18', trend: '▲ 2,1 días', target: 'Robusto' },
+          { value: '11,8 d', sub: 'meta 10 d', trend: '▼ 1,4 d', target: 'En ajuste' },
+          { value: '27', sub: 'alerta media', trend: '▼ 5', target: 'Se monitorean' }
+        ],
+        ticket: [
+          { value: '$ 2.470', sub: 'meta $ 2.640', trend: '▲ 93,6%', target: 'Falta $ 170' },
+          { value: '$ 3.120', sub: 'mes anterior', trend: '▲ 3,1%', target: 'En alza' },
+          { value: '$ 1.120', sub: 'promedio', trend: '▲ 2,6%', target: 'Línea premium' }
+        ],
+        'facturacion-valor': [
+          { value: '$ 31,3 M', sub: 'objetivo $ 34,0 M', trend: '▲ 92,1%', target: 'Faltan $ 2,7 M' },
+          { value: '31,7%', sub: 'meta 32,4%', trend: '▲ 0,8 pp', target: 'Estable' },
+          { value: '$ 7,2 M', sub: 'acumulado', trend: '▲ 12,1%', target: 'Positivo' }
+        ]
+      },
+      Mar: {
+        ventas: [
+          { value: '$ 19,1 M', sub: 'objetivo $ 20,1 M', trend: '▲ 95,0%', target: 'Faltan $ 1,0 M' },
+          { value: '1.860', sub: 'objetivo 1.980', trend: '▲ 94,0%', target: 'Faltan 120 u.' },
+          { value: '63%', sub: 'sillones / colchones', trend: '▲ 5,1 pp', target: 'vs. feb.' }
+        ],
+        produccion: [
+          { value: '2.390', sub: 'plan 2.500', trend: '▲ 95,6%', target: 'Faltan 110 u.' },
+          { value: '97%', sub: 'meta 98%', trend: '▲ 2,8 pp', target: 'Mejor que feb.' },
+          { value: '12', sub: 'órdenes lentas', trend: '▼ 3', target: 'En revisión' }
+        ],
+        'facturacion-unidades': [
+          { value: '1.960', sub: 'plan 2.070', trend: '▲ 94,7%', target: 'Faltan 110 u.' },
+          { value: '650', sub: 'objetivo 690', trend: '▲ 94,2%', target: 'Faltan 40' },
+          { value: '87', sub: 'meta 92', trend: '▲ 94,6%', target: 'Promedio mensual' }
+        ],
+        productividad: [
+          { value: '1.330', sub: 'objetivo 1.520', trend: '▼ 87,5%', target: 'Faltan recuperar 190 u.' },
+          { value: '9.180', sub: 'objetivo 9.430', trend: '▼ 97,3%', target: 'Faltan recuperar 250 u.' },
+          { value: '4.420', sub: 'objetivo 4.710', trend: '▼ 93,8%', target: 'Faltan recuperar 290 eq.' }
+        ],
+        stock: [
+          { value: '4.430', sub: 'días de cobertura 18', trend: '▲ 2,5 días', target: 'Robusto' },
+          { value: '11,4 d', sub: 'meta 10 d', trend: '▼ 1,0 d', target: 'En ajuste' },
+          { value: '24', sub: 'alerta media', trend: '▼ 4', target: 'Se monitorean' }
+        ],
+        ticket: [
+          { value: '$ 2.560', sub: 'meta $ 2.700', trend: '▲ 94,8%', target: 'Falta $ 140' },
+          { value: '$ 3.220', sub: 'mes anterior', trend: '▲ 3,2%', target: 'En alza' },
+          { value: '$ 1.170', sub: 'promedio', trend: '▲ 2,8%', target: 'Línea premium' }
+        ],
+        'facturacion-valor': [
+          { value: '$ 33,2 M', sub: 'objetivo $ 35,4 M', trend: '▲ 93,8%', target: 'Faltan $ 2,2 M' },
+          { value: '32,1%', sub: 'meta 32,8%', trend: '▲ 1,1 pp', target: 'Estable' },
+          { value: '$ 7,6 M', sub: 'acumulado', trend: '▲ 12,9%', target: 'Positivo' }
+        ]
+      },
+      Abr: {
+        ventas: [
+          { value: '$ 18,6 M', sub: 'objetivo $ 19,8 M', trend: '▲ 94,0%', target: 'Faltan $ 1,2 M' },
+          { value: '1.790', sub: 'objetivo 1.920', trend: '▲ 93,2%', target: 'Faltan 130 u.' },
+          { value: '61%', sub: 'sillones / colchones', trend: '▲ 4,0 pp', target: 'vs. mar.' }
+        ],
+        produccion: [
+          { value: '2.250', sub: 'plan 2.380', trend: '▲ 94,5%', target: 'Faltan 130 u.' },
+          { value: '96%', sub: 'meta 98%', trend: '▲ 2,4 pp', target: 'Mejor que mar.' },
+          { value: '14', sub: 'órdenes lentas', trend: '▼ 4', target: 'En revisión' }
+        ],
+        'facturacion-unidades': [
+          { value: '1.850', sub: 'plan 1.990', trend: '▲ 93,0%', target: 'Faltan 140 u.' },
+          { value: '620', sub: 'objetivo 670', trend: '▲ 92,5%', target: 'Faltan 50' },
+          { value: '82', sub: 'meta 88', trend: '▲ 93,2%', target: 'Promedio mensual' }
+        ],
+        productividad: [
+          { value: '1.220', sub: 'objetivo 1.500', trend: '▼ 81,3%', target: 'Faltan recuperar 280 u.' },
+          { value: '8.820', sub: 'objetivo 9.240', trend: '▼ 95,4%', target: 'Faltan recuperar 420 u.' },
+          { value: '4.080', sub: 'objetivo 4.500', trend: '▼ 90,7%', target: 'Faltan recuperar 420 eq.' }
+        ],
+        stock: [
+          { value: '4.180', sub: 'días de cobertura 17', trend: '▲ 1,9 días', target: 'Robusto' },
+          { value: '12,0 d', sub: 'meta 10 d', trend: '▼ 1,3 d', target: 'En ajuste' },
+          { value: '28', sub: 'alerta media', trend: '▼ 6', target: 'Se monitorean' }
+        ],
+        ticket: [
+          { value: '$ 2.450', sub: 'meta $ 2.630', trend: '▲ 93,2%', target: 'Falta $ 180' },
+          { value: '$ 3.100', sub: 'mes anterior', trend: '▲ 2,9%', target: 'En alza' },
+          { value: '$ 1.110', sub: 'promedio', trend: '▲ 2,4%', target: 'Línea premium' }
+        ],
+        'facturacion-valor': [
+          { value: '$ 31,1 M', sub: 'objetivo $ 33,8 M', trend: '▲ 92,0%', target: 'Faltan $ 2,7 M' },
+          { value: '31,5%', sub: 'meta 32,4%', trend: '▲ 0,7 pp', target: 'Estable' },
+          { value: '$ 7,0 M', sub: 'acumulado', trend: '▲ 11,9%', target: 'Positivo' }
+        ]
+      },
+      May: {
+        ventas: [
+          { value: '$ 19,0 M', sub: 'objetivo $ 20,2 M', trend: '▲ 94,0%', target: 'Faltan $ 1,2 M' },
+          { value: '1.820', sub: 'objetivo 1.960', trend: '▲ 92,9%', target: 'Faltan 140 u.' },
+          { value: '62%', sub: 'sillones / colchones', trend: '▲ 4,6 pp', target: 'vs. abr.' }
+        ],
+        produccion: [
+          { value: '2.310', sub: 'plan 2.440', trend: '▲ 94,7%', target: 'Faltan 130 u.' },
+          { value: '96%', sub: 'meta 98%', trend: '▲ 2,5 pp', target: 'Mejor que abr.' },
+          { value: '13', sub: 'órdenes lentas', trend: '▼ 4', target: 'En revisión' }
+        ],
+        'facturacion-unidades': [
+          { value: '1.900', sub: 'plan 2.050', trend: '▲ 92,7%', target: 'Faltan 150 u.' },
+          { value: '635', sub: 'objetivo 675', trend: '▲ 94,1%', target: 'Faltan 40' },
+          { value: '84', sub: 'meta 90', trend: '▲ 93,3%', target: 'Promedio mensual' }
+        ],
+        productividad: [
+          { value: '1.260', sub: 'objetivo 1.520', trend: '▼ 82,9%', target: 'Faltan recuperar 260 u.' },
+          { value: '8.940', sub: 'objetivo 9.300', trend: '▼ 96,1%', target: 'Faltan recuperar 360 u.' },
+          { value: '4.160', sub: 'objetivo 4.600', trend: '▼ 90,4%', target: 'Faltan recuperar 440 eq.' }
+        ],
+        stock: [
+          { value: '4.260', sub: 'días de cobertura 18', trend: '▲ 2,3 días', target: 'Robusto' },
+          { value: '11,7 d', sub: 'meta 10 d', trend: '▼ 1,3 d', target: 'En ajuste' },
+          { value: '26', sub: 'alerta media', trend: '▼ 5', target: 'Se monitorean' }
+        ],
+        ticket: [
+          { value: '$ 2.480', sub: 'meta $ 2.660', trend: '▲ 93,2%', target: 'Falta $ 180' },
+          { value: '$ 3.150', sub: 'mes anterior', trend: '▲ 3,0%', target: 'En alza' },
+          { value: '$ 1.130', sub: 'promedio', trend: '▲ 2,5%', target: 'Línea premium' }
+        ],
+        'facturacion-valor': [
+          { value: '$ 31,6 M', sub: 'objetivo $ 34,8 M', trend: '▲ 90,8%', target: 'Faltan $ 3,2 M' },
+          { value: '31,8%', sub: 'meta 32,6%', trend: '▲ 0,8 pp', target: 'Estable' },
+          { value: '$ 7,4 M', sub: 'acumulado', trend: '▲ 12,4%', target: 'Positivo' }
+        ]
+      },
+      Jun: {
+        ventas: [
+          { value: '$ 19,5 M', sub: 'objetivo $ 20,6 M', trend: '▲ 94,7%', target: 'Faltan $ 1,1 M' },
+          { value: '1.860', sub: 'objetivo 1.980', trend: '▲ 94,0%', target: 'Faltan 120 u.' },
+          { value: '64%', sub: 'sillones / colchones', trend: '▲ 5,6 pp', target: 'vs. may.' }
+        ],
+        produccion: [
+          { value: '2.360', sub: 'plan 2.470', trend: '▲ 95,5%', target: 'Faltan 110 u.' },
+          { value: '97%', sub: 'meta 98%', trend: '▲ 2,7 pp', target: 'Mejor que may.' },
+          { value: '11', sub: 'órdenes lentas', trend: '▼ 3', target: 'En revisión' }
+        ],
+        'facturacion-unidades': [
+          { value: '1.980', sub: 'plan 2.100', trend: '▲ 94,3%', target: 'Faltan 120 u.' },
+          { value: '650', sub: 'objetivo 690', trend: '▲ 94,2%', target: 'Faltan 40' },
+          { value: '88', sub: 'meta 93', trend: '▲ 94,6%', target: 'Promedio mensual' }
+        ],
+        productividad: [
+          { value: '1.310', sub: 'objetivo 1.560', trend: '▼ 84,0%', target: 'Faltan recuperar 250 u.' },
+          { value: '9.060', sub: 'objetivo 9.340', trend: '▼ 97,0%', target: 'Faltan recuperar 280 u.' },
+          { value: '4.260', sub: 'objetivo 4.640', trend: '▼ 91,8%', target: 'Faltan recuperar 380 eq.' }
+        ],
+        stock: [
+          { value: '4.380', sub: 'días de cobertura 18', trend: '▲ 2,6 días', target: 'Robusto' },
+          { value: '11,2 d', sub: 'meta 10 d', trend: '▼ 0,9 d', target: 'En ajuste' },
+          { value: '23', sub: 'alerta media', trend: '▼ 4', target: 'Se monitorean' }
+        ],
+        ticket: [
+          { value: '$ 2.520', sub: 'meta $ 2.700', trend: '▲ 93,3%', target: 'Falta $ 180' },
+          { value: '$ 3.220', sub: 'mes anterior', trend: '▲ 3,1%', target: 'En alza' },
+          { value: '$ 1.180', sub: 'promedio', trend: '▲ 2,7%', target: 'Línea premium' }
+        ],
+        'facturacion-valor': [
+          { value: '$ 32,7 M', sub: 'objetivo $ 35,1 M', trend: '▲ 93,2%', target: 'Faltan $ 2,4 M' },
+          { value: '32,0%', sub: 'meta 32,8%', trend: '▲ 1,0 pp', target: 'Estable' },
+          { value: '$ 7,8 M', sub: 'acumulado', trend: '▲ 13,1%', target: 'Positivo' }
+        ]
+      },
+      Jul: {
+        ventas: [
+          { value: '$ 19,8 M', sub: 'objetivo $ 21,1 M', trend: '▲ 93,8%', target: 'Faltan $ 1,3 M' },
+          { value: '1.920', sub: 'objetivo 2.050', trend: '▲ 93,7%', target: 'Faltan 130 u.' },
+          { value: '65%', sub: 'sillones / colchones', trend: '▲ 5,8 pp', target: 'vs. jun.' }
+        ],
+        produccion: [
+          { value: '2.420', sub: 'plan 2.560', trend: '▲ 94,5%', target: 'Faltan 140 u.' },
+          { value: '97%', sub: 'meta 98%', trend: '▲ 2,6 pp', target: 'Mejor que jun.' },
+          { value: '10', sub: 'órdenes lentas', trend: '▼ 2', target: 'En revisión' }
+        ],
+        'facturacion-unidades': [
+          { value: '2.020', sub: 'plan 2.150', trend: '▲ 94,0%', target: 'Faltan 130 u.' },
+          { value: '670', sub: 'objetivo 710', trend: '▲ 94,4%', target: 'Faltan 40' },
+          { value: '92', sub: 'meta 96', trend: '▲ 95,8%', target: 'Promedio mensual' }
+        ],
+        productividad: [
+          { value: '1.350', sub: 'objetivo 1.600', trend: '▼ 84,4%', target: 'Faltan recuperar 250 u.' },
+          { value: '9.170', sub: 'objetivo 9.420', trend: '▼ 97,4%', target: 'Faltan recuperar 250 u.' },
+          { value: '4.420', sub: 'objetivo 4.760', trend: '▼ 92,9%', target: 'Faltan recuperar 340 eq.' }
+        ],
+        stock: [
+          { value: '4.460', sub: 'días de cobertura 18', trend: '▲ 2,7 días', target: 'Robusto' },
+          { value: '11,1 d', sub: 'meta 10 d', trend: '▼ 0,8 d', target: 'En ajuste' },
+          { value: '22', sub: 'alerta media', trend: '▼ 4', target: 'Se monitorean' }
+        ],
+        ticket: [
+          { value: '$ 2.620', sub: 'meta $ 2.780', trend: '▲ 94,2%', target: 'Falta $ 160' },
+          { value: '$ 3.340', sub: 'mes anterior', trend: '▲ 3,5%', target: 'En alza' },
+          { value: '$ 1.220', sub: 'promedio', trend: '▲ 3,1%', target: 'Línea premium' }
+        ],
+        'facturacion-valor': [
+          { value: '$ 34,1 M', sub: 'objetivo $ 36,4 M', trend: '▲ 93,7%', target: 'Faltan $ 2,3 M' },
+          { value: '32,3%', sub: 'meta 32,9%', trend: '▲ 1,1 pp', target: 'Estable' },
+          { value: '$ 8,3 M', sub: 'acumulado', trend: '▲ 13,8%', target: 'Positivo' }
+        ]
+      },
+      Ago: {
+        ventas: [
+          { value: '$ 20,1 M', sub: 'objetivo $ 21,5 M', trend: '▲ 93,5%', target: 'Faltan $ 1,4 M' },
+          { value: '1.960', sub: 'objetivo 2.090', trend: '▲ 93,8%', target: 'Faltan 130 u.' },
+          { value: '66%', sub: 'sillones / colchones', trend: '▲ 6,0 pp', target: 'vs. jul.' }
+        ],
+        produccion: [
+          { value: '2.500', sub: 'plan 2.630', trend: '▲ 95,1%', target: 'Faltan 130 u.' },
+          { value: '97%', sub: 'meta 98%', trend: '▲ 2,8 pp', target: 'Mejor que jul.' },
+          { value: '9', sub: 'órdenes lentas', trend: '▼ 2', target: 'En revisión' }
+        ],
+        'facturacion-unidades': [
+          { value: '2.050', sub: 'plan 2.210', trend: '▲ 92,8%', target: 'Faltan 160 u.' },
+          { value: '690', sub: 'objetivo 725', trend: '▲ 95,2%', target: 'Faltan 35' },
+          { value: '94', sub: 'meta 98', trend: '▲ 95,9%', target: 'Promedio mensual' }
+        ],
+        productividad: [
+          { value: '1.390', sub: 'objetivo 1.610', trend: '▼ 86,3%', target: 'Faltan recuperar 220 u.' },
+          { value: '9.320', sub: 'objetivo 9.510', trend: '▼ 98,0%', target: 'Faltan recuperar 190 u.' },
+          { value: '4.560', sub: 'objetivo 4.820', trend: '▼ 94,6%', target: 'Faltan recuperar 260 eq.' }
+        ],
+        stock: [
+          { value: '4.520', sub: 'días de cobertura 18', trend: '▲ 2,8 días', target: 'Robusto' },
+          { value: '10,9 d', sub: 'meta 10 d', trend: '▼ 0,7 d', target: 'En ajuste' },
+          { value: '21', sub: 'alerta media', trend: '▼ 3', target: 'Se monitorean' }
+        ],
+        ticket: [
+          { value: '$ 2.650', sub: 'meta $ 2.820', trend: '▲ 94,0%', target: 'Falta $ 170' },
+          { value: '$ 3.390', sub: 'mes anterior', trend: '▲ 3,6%', target: 'En alza' },
+          { value: '$ 1.240', sub: 'promedio', trend: '▲ 3,2%', target: 'Línea premium' }
+        ],
+        'facturacion-valor': [
+          { value: '$ 34,4 M', sub: 'objetivo $ 36,8 M', trend: '▲ 93,5%', target: 'Faltan $ 2,4 M' },
+          { value: '32,5%', sub: 'meta 33,1%', trend: '▲ 1,2 pp', target: 'Estable' },
+          { value: '$ 8,6 M', sub: 'acumulado', trend: '▲ 14,0%', target: 'Positivo' }
+        ]
+      },
+      Sep: {
+        ventas: [
+          { value: '$ 20,4 M', sub: 'objetivo $ 21,8 M', trend: '▲ 93,6%', target: 'Faltan $ 1,4 M' },
+          { value: '1.990', sub: 'objetivo 2.120', trend: '▲ 93,9%', target: 'Faltan 130 u.' },
+          { value: '67%', sub: 'sillones / colchones', trend: '▲ 6,2 pp', target: 'vs. ago.' }
+        ],
+        produccion: [
+          { value: '2.560', sub: 'plan 2.660', trend: '▲ 96,2%', target: 'Faltan 100 u.' },
+          { value: '98%', sub: 'meta 98%', trend: '▲ 3,1 pp', target: 'Mejor que ago.' },
+          { value: '8', sub: 'órdenes lentas', trend: '▼ 2', target: 'En revisión' }
+        ],
+        'facturacion-unidades': [
+          { value: '2.110', sub: 'plan 2.260', trend: '▲ 93,4%', target: 'Faltan 150 u.' },
+          { value: '700', sub: 'objetivo 735', trend: '▲ 95,2%', target: 'Faltan 35' },
+          { value: '96', sub: 'meta 100', trend: '▲ 96,0%', target: 'Promedio mensual' }
+        ],
+        productividad: [
+          { value: '1.420', sub: 'objetivo 1.640', trend: '▼ 86,6%', target: 'Faltan recuperar 220 u.' },
+          { value: '9.420', sub: 'objetivo 9.620', trend: '▼ 97,9%', target: 'Faltan recuperar 200 u.' },
+          { value: '4.620', sub: 'objetivo 4.860', trend: '▼ 95,1%', target: 'Faltan recuperar 240 eq.' }
+        ],
+        stock: [
+          { value: '4.590', sub: 'días de cobertura 18', trend: '▲ 2,9 días', target: 'Robusto' },
+          { value: '10,7 d', sub: 'meta 10 d', trend: '▼ 0,6 d', target: 'En ajuste' },
+          { value: '20', sub: 'alerta media', trend: '▼ 3', target: 'Se monitorean' }
+        ],
+        ticket: [
+          { value: '$ 2.680', sub: 'meta $ 2.850', trend: '▲ 94,0%', target: 'Falta $ 170' },
+          { value: '$ 3.430', sub: 'mes anterior', trend: '▲ 3,7%', target: 'En alza' },
+          { value: '$ 1.270', sub: 'promedio', trend: '▲ 3,2%', target: 'Línea premium' }
+        ],
+        'facturacion-valor': [
+          { value: '$ 34,9 M', sub: 'objetivo $ 37,4 M', trend: '▲ 93,3%', target: 'Faltan $ 2,5 M' },
+          { value: '32,7%', sub: 'meta 33,2%', trend: '▲ 1,3 pp', target: 'Estable' },
+          { value: '$ 8,9 M', sub: 'acumulado', trend: '▲ 14,3%', target: 'Positivo' }
+        ]
+      },
+      Oct: {
+        ventas: [
+          { value: '$ 19,7 M', sub: 'objetivo $ 21,0 M', trend: '▲ 93,8%', target: 'Faltan $ 1,3 M' },
+          { value: '1.930', sub: 'objetivo 2.050', trend: '▲ 94,1%', target: 'Faltan 120 u.' },
+          { value: '64%', sub: 'sillones / colchones', trend: '▲ 5,6 pp', target: 'vs. sep.' }
+        ],
+        produccion: [
+          { value: '2.440', sub: 'plan 2.560', trend: '▲ 95,3%', target: 'Faltan 120 u.' },
+          { value: '97%', sub: 'meta 98%', trend: '▲ 2,8 pp', target: 'Mejor que sep.' },
+          { value: '9', sub: 'órdenes lentas', trend: '▼ 2', target: 'En revisión' }
+        ],
+        'facturacion-unidades': [
+          { value: '2.020', sub: 'plan 2.150', trend: '▲ 94,0%', target: 'Faltan 130 u.' },
+          { value: '670', sub: 'objetivo 705', trend: '▲ 95,0%', target: 'Faltan 35' },
+          { value: '92', sub: 'meta 96', trend: '▲ 95,8%', target: 'Promedio mensual' }
+        ],
+        productividad: [
+          { value: '1.360', sub: 'objetivo 1.590', trend: '▼ 85,5%', target: 'Faltan recuperar 230 u.' },
+          { value: '9.080', sub: 'objetivo 9.360', trend: '▼ 96,9%', target: 'Faltan recuperar 280 u.' },
+          { value: '4.470', sub: 'objetivo 4.710', trend: '▼ 94,9%', target: 'Faltan recuperar 240 eq.' }
+        ],
+        stock: [
+          { value: '4.430', sub: 'días de cobertura 18', trend: '▲ 2,6 días', target: 'Robusto' },
+          { value: '11,0 d', sub: 'meta 10 d', trend: '▼ 0,8 d', target: 'En ajuste' },
+          { value: '22', sub: 'alerta media', trend: '▼ 3', target: 'Se monitorean' }
+        ],
+        ticket: [
+          { value: '$ 2.610', sub: 'meta $ 2.780', trend: '▲ 94,0%', target: 'Falta $ 170' },
+          { value: '$ 3.310', sub: 'mes anterior', trend: '▲ 3,4%', target: 'En alza' },
+          { value: '$ 1.220', sub: 'promedio', trend: '▲ 3,0%', target: 'Línea premium' }
+        ],
+        'facturacion-valor': [
+          { value: '$ 33,9 M', sub: 'objetivo $ 36,3 M', trend: '▲ 93,4%', target: 'Faltan $ 2,4 M' },
+          { value: '32,2%', sub: 'meta 32,9%', trend: '▲ 1,1 pp', target: 'Estable' },
+          { value: '$ 8,3 M', sub: 'acumulado', trend: '▲ 13,8%', target: 'Positivo' }
+        ]
+      },
+      Nov: {
+        ventas: [
+          { value: '$ 20,0 M', sub: 'objetivo $ 21,3 M', trend: '▲ 94,1%', target: 'Faltan $ 1,3 M' },
+          { value: '1.960', sub: 'objetivo 2.080', trend: '▲ 94,2%', target: 'Faltan 120 u.' },
+          { value: '66%', sub: 'sillones / colchones', trend: '▲ 5,9 pp', target: 'vs. oct.' }
+        ],
+        produccion: [
+          { value: '2.500', sub: 'plan 2.620', trend: '▲ 95,4%', target: 'Faltan 120 u.' },
+          { value: '97%', sub: 'meta 98%', trend: '▲ 2,8 pp', target: 'Mejor que oct.' },
+          { value: '9', sub: 'órdenes lentas', trend: '▼ 2', target: 'En revisión' }
+        ],
+        'facturacion-unidades': [
+          { value: '2.070', sub: 'plan 2.200', trend: '▲ 94,1%', target: 'Faltan 130 u.' },
+          { value: '685', sub: 'objetivo 720', trend: '▲ 95,1%', target: 'Faltan 35' },
+          { value: '94', sub: 'meta 98', trend: '▲ 95,9%', target: 'Promedio mensual' }
+        ],
+        productividad: [
+          { value: '1.390', sub: 'objetivo 1.620', trend: '▼ 85,8%', target: 'Faltan recuperar 230 u.' },
+          { value: '9.260', sub: 'objetivo 9.500', trend: '▼ 97,5%', target: 'Faltan recuperar 240 u.' },
+          { value: '4.530', sub: 'objetivo 4.760', trend: '▼ 95,2%', target: 'Faltan recuperar 230 eq.' }
+        ],
+        stock: [
+          { value: '4.520', sub: 'días de cobertura 18', trend: '▲ 2,8 días', target: 'Robusto' },
+          { value: '10,8 d', sub: 'meta 10 d', trend: '▼ 0,7 d', target: 'En ajuste' },
+          { value: '21', sub: 'alerta media', trend: '▼ 3', target: 'Se monitorean' }
+        ],
+        ticket: [
+          { value: '$ 2.650', sub: 'meta $ 2.820', trend: '▲ 94,0%', target: 'Falta $ 170' },
+          { value: '$ 3.390', sub: 'mes anterior', trend: '▲ 3,7%', target: 'En alza' },
+          { value: '$ 1.240', sub: 'promedio', trend: '▲ 3,2%', target: 'Línea premium' }
+        ],
+        'facturacion-valor': [
+          { value: '$ 34,2 M', sub: 'objetivo $ 36,8 M', trend: '▲ 92,9%', target: 'Faltan $ 2,6 M' },
+          { value: '32,4%', sub: 'meta 33,1%', trend: '▲ 1,2 pp', target: 'Estable' },
+          { value: '$ 8,6 M', sub: 'acumulado', trend: '▲ 14,1%', target: 'Positivo' }
+        ]
+      },
+      Dic: {
+        ventas: [
+          { value: '$ 20,9 M', sub: 'objetivo $ 22,2 M', trend: '▲ 94,1%', target: 'Faltan $ 1,3 M' },
+          { value: '2.050', sub: 'objetivo 2.180', trend: '▲ 94,0%', target: 'Faltan 130 u.' },
+          { value: '68%', sub: 'sillones / colchones', trend: '▲ 6,4 pp', target: 'vs. nov.' }
+        ],
+        produccion: [
+          { value: '2.620', sub: 'plan 2.760', trend: '▲ 95,0%', target: 'Faltan 140 u.' },
+          { value: '98%', sub: 'meta 98%', trend: '▲ 3,2 pp', target: 'Mejor que nov.' },
+          { value: '7', sub: 'órdenes lentas', trend: '▼ 2', target: 'En revisión' }
+        ],
+        'facturacion-unidades': [
+          { value: '2.170', sub: 'plan 2.320', trend: '▲ 93,5%', target: 'Faltan 150 u.' },
+          { value: '715', sub: 'objetivo 750', trend: '▲ 95,3%', target: 'Faltan 35' },
+          { value: '98', sub: 'meta 101', trend: '▲ 97,0%', target: 'Promedio mensual' }
+        ],
+        productividad: [
+          { value: '1.450', sub: 'objetivo 1.680', trend: '▼ 86,3%', target: 'Faltan recuperar 230 u.' },
+          { value: '9.500', sub: 'objetivo 9.740', trend: '▼ 97,5%', target: 'Faltan recuperar 240 u.' },
+          { value: '4.690', sub: 'objetivo 4.920', trend: '▼ 95,3%', target: 'Faltan recuperar 230 eq.' }
+        ],
+        stock: [
+          { value: '4.680', sub: 'días de cobertura 19', trend: '▲ 3,0 días', target: 'Robusto' },
+          { value: '10,6 d', sub: 'meta 10 d', trend: '▼ 0,5 d', target: 'En ajuste' },
+          { value: '18', sub: 'alerta media', trend: '▼ 2', target: 'Se monitorean' }
+        ],
+        ticket: [
+          { value: '$ 2.760', sub: 'meta $ 2.920', trend: '▲ 94,5%', target: 'Falta $ 160' },
+          { value: '$ 3.510', sub: 'mes anterior', trend: '▲ 3,8%', target: 'En alza' },
+          { value: '$ 1.280', sub: 'promedio', trend: '▲ 3,3%', target: 'Línea premium' }
+        ],
+        'facturacion-valor': [
+          { value: '$ 35,8 M', sub: 'objetivo $ 38,2 M', trend: '▲ 93,7%', target: 'Faltan $ 2,4 M' },
+          { value: '32,8%', sub: 'meta 33,4%', trend: '▲ 1,3 pp', target: 'Estable' },
+          { value: '$ 9,1 M', sub: 'acumulado', trend: '▲ 14,6%', target: 'Positivo' }
+        ]
+      }
+    };
+
+    const monthKeys = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    const quarterMonths = {
+      T1: ['Ene', 'Feb', 'Mar'],
+      T2: ['Abr', 'May', 'Jun'],
+      T3: ['Jul', 'Ago', 'Sep'],
+      T4: ['Oct', 'Nov', 'Dic']
+    };
+
+    const monthTabs = document.querySelectorAll('.month-tab');
+    const periodTabs = document.querySelectorAll('.period-tab');
+    const dailyGrid = document.getElementById('dailyGrid');
+    const dailyHeaderMonth = document.getElementById('dailyHeaderMonth');
+    const dailyHeaderAverage = document.getElementById('dailyHeaderAverage');
+
+    function getDayClass(value) {
+      if (value >= 90) return 'good';
+      if (value >= 75) return 'warn';
+      return 'bad';
+    }
+
+    function renderPanelMetrics(monthName) {
+      const data = monthData[monthName] || monthData.Ene;
+      const panelOrder = ['ventas', 'produccion', 'facturacion-unidades', 'productividad', 'stock', 'ticket', 'facturacion-valor'];
+
+      panelOrder.forEach((panelKey, panelIndex) => {
+        const panel = document.getElementById(`panel-${panelKey}`);
+        if (!panel) return;
+
+        const metrics = data[panelKey] || [];
+        const cards = panel.querySelectorAll('.metric');
+
+        cards.forEach((card, index) => {
+          const metric = metrics[index];
+          if (!metric) return;
+
+          const valueEl = card.querySelector('.value');
+          const subEl = card.querySelector('.sub');
+          const trendEl = card.querySelector('.trend');
+          const targetEl = card.querySelector('.target');
+
+          valueEl.textContent = metric.value;
+          subEl.textContent = metric.sub;
+          trendEl.textContent = metric.trend;
+          trendEl.classList.toggle('down', metric.trend.includes('▼'));
+          targetEl.textContent = metric.target;
+        });
+      });
+    }
+
+    function renderDaily(monthName) {
+      const monthValues = {
+        Ene: [76, 82, 90, 71, 88, 94, 96, 68, 85, 91, 93, 74, 58, 87, 89, 97, 92, 69, 81, 86, 95, 90, 72, 88, 91, 93, 96, 75, 88, 90],
+        Feb: [72, 79, 85, 90, 86, 80, 75, 88, 82, 94, 91, 70, 64, 78, 83, 87, 92, 89, 74, 83, 90, 87, 76, 79, 85, 83, 88, 90, 81, 86],
+        Mar: [80, 84, 88, 92, 97, 90, 86, 83, 89, 93, 95, 87, 79, 82, 91, 94, 88, 90, 96, 85, 81, 93, 89, 82, 84, 90, 95, 88, 91, 87],
+        Abr: [68, 74, 80, 83, 79, 86, 88, 77, 82, 84, 90, 92, 76, 71, 78, 85, 89, 91, 80, 73, 77, 84, 88, 86, 79, 82, 91, 90, 81, 87],
+        May: [75, 81, 88, 92, 95, 89, 86, 80, 84, 90, 93, 96, 82, 79, 85, 90, 94, 88, 83, 87, 91, 96, 89, 84, 88, 92, 95, 86, 90, 94],
+        Jun: [70, 77, 82, 88, 90, 93, 86, 81, 84, 89, 91, 87, 76, 80, 85, 88, 90, 94, 88, 84, 82, 89, 92, 86, 78, 83, 90, 94, 91, 87],
+        Jul: [78, 82, 85, 89, 92, 96, 95, 88, 84, 90, 94, 91, 83, 80, 86, 90, 97, 92, 88, 91, 93, 89, 84, 86, 94, 93, 90, 87, 85, 88],
+        Ago: [81, 86, 90, 94, 88, 83, 89, 92, 97, 95, 90, 86, 82, 89, 91, 95, 90, 84, 79, 83, 90, 94, 86, 80, 88, 92, 96, 91, 87, 90],
+        Sep: [77, 83, 88, 92, 94, 90, 84, 80, 87, 91, 96, 92, 85, 81, 86, 90, 95, 89, 86, 88, 94, 97, 90, 88, 83, 89, 94, 92, 88, 91],
+        Oct: [70, 76, 82, 79, 84, 88, 92, 90, 81, 78, 85, 87, 91, 95, 90, 83, 80, 84, 89, 92, 86, 82, 78, 85, 88, 90, 93, 87, 85, 89],
+        Nov: [74, 79, 86, 90, 94, 88, 82, 79, 84, 89, 92, 96, 91, 84, 80, 86, 90, 93, 88, 81, 85, 89, 94, 90, 82, 79, 84, 88, 92, 95],
+        Dic: [72, 78, 83, 89, 94, 91, 86, 80, 85, 90, 93, 89, 81, 76, 83, 90, 94, 96, 88, 84, 82, 88, 91, 93, 89, 86, 82, 87, 91, 94]
+      };
+
+      const values = monthValues[monthName] || monthValues.Ene;
+      const avg = Math.round(values.reduce((sum, value) => sum + value, 0) / values.length);
+
+      dailyGrid.innerHTML = '';
+      values.forEach((value, index) => {
+        const pill = document.createElement('div');
+        pill.className = `day-pill ${getDayClass(value)}`;
+        pill.innerHTML = `<strong>${index + 1}</strong>${value}`;
+        dailyGrid.appendChild(pill);
+      });
+
+      dailyHeaderMonth.textContent = `Vista diaria · ${monthName} 2026`;
+      dailyHeaderAverage.textContent = `Promedio útil: ${avg} u/día`;
+    }
+
+    function renderForMonth(monthName) {
+      renderDaily(monthName);
+      renderPanelMetrics(monthName);
+    }
+
+    moduleTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.panel;
+        moduleTabs.forEach((item) => item.classList.toggle('active', item === tab));
+        panels.forEach((panel) => {
+          panel.classList.toggle('active', panel.id === 'panel-' + target);
+        });
+      });
+    });
+
+    monthTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        monthTabs.forEach((item) => item.classList.toggle('active', item === tab));
+        renderForMonth(tab.dataset.month);
+      });
+    });
+
+    periodTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        periodTabs.forEach((item) => item.classList.toggle('active', item === tab));
+        const quarter = tab.dataset.period;
+        const firstMonth = quarterMonths[quarter][0];
+        monthTabs.forEach((item) => item.classList.toggle('active', item.dataset.month === firstMonth));
+        renderForMonth(firstMonth);
+      });
+    });
+
+    renderForMonth('Ene');
+  </script>
+</body>
+</html>

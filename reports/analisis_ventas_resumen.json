@@ -1,0 +1,38 @@
+{
+  "fecha_analisis": "2026-08-14T08:38:03.478892",
+  "total_ordenes": 41,
+  "total_ingresos": 15864818.620000001,
+  "ticket_promedio": 396620.46550000005,
+  "ticket_maximo": 1396000.0,
+  "ticket_minimo": 77302.0,
+  "clientes_unicos": 35,
+  "vendedores_unicos": 1,
+  "top_5_clientes": [
+    [
+      "MARTINEZ ROSANA BEATRIZ",
+      1396000.0
+    ],
+    [
+      "SVALDI MARTA GISELLE",
+      1361100.0
+    ],
+    [
+      "AÑASCO ARIEL",
+      1028000.0
+    ],
+    [
+      "SANDOBAL LORENA ANALIA",
+      804600.0
+    ],
+    [
+      "BELTRAMO CATALINA NELIDA",
+      698000.0
+    ]
+  ],
+  "estados": {
+    "Orden de venta": 41
+  },
+  "terminos_pago": {
+    "Pago anticipado": 41
+  }
+}

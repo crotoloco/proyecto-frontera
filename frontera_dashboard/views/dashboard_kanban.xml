@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- VISTA KANBAN AVANZADA - DASHBOARD EJECUTIVO VISUAL -->
+    <record id="view_dashboard_kpi_kanban_advanced" model="ir.ui.view">
+        <field name="name">dashboard.kpi.kanban.advanced</field>
+        <field name="model">dashboard.kpi</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_dashboard o_dashboard_kanban">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="value"/>
+                <field name="target"/>
+                <field name="completion_percentage"/>
+                <field name="status"/>
+                <field name="delayed_count"/>
+                <field name="pending_count"/>
+                <field name="completed_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card o_kanban_card_miniature {{record.status.raw_value === 'danger' and 'oe_kanban_card_critical' or record.status.raw_value === 'warning' and 'oe_kanban_card_warning' or 'oe_kanban_card_success'}}">
+                            <div class="oe_kanban_content">
+                                <div class="oe_kanban_title">
+                                    <h4 class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </h4>
+                                    <div class="oe_kanban_badge">
+                                        <span t-attf-class="badge {{record.status.raw_value === 'danger' and 'badge-danger' or record.status.raw_value === 'warning' and 'badge-warning' or 'badge-success'}}">
+                                            <field name="status"/>
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="o_kanban_metrics">
+                                    <div class="o_metric_value">
+                                        <span class="o_metric_number">
+                                            <field name="value" widget="integer"/>
+                                        </span>
+                                        <span class="o_metric_label">/ <field name="target" widget="integer"/></span>
+                                    </div>
+                                    <div class="o_metric_percentage">
+                                        <span t-attf-class="badge {{record.completion_percentage.raw_value >= 80 and 'badge-success' or record.completion_percentage.raw_value >= 50 and 'badge-warning' or 'badge-danger'}}">
+                                            <field name="completion_percentage" widget="integer"/>%
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="o_progress_bar">
+                                    <div class="progress" style="height: 20px;">
+                                        <div t-attf-class="progress-bar {{record.completion_percentage.raw_value >= 80 and 'bg-success' or record.completion_percentage.raw_value >= 50 and 'bg-warning' or 'bg-danger'}}" 
+                                             t-attf-style="width: {{record.completion_percentage.raw_value}}%">
+                                            <span t-if="record.completion_percentage.raw_value > 10">
+                                                <field name="completion_percentage" widget="integer"/>%
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="o_kanban_details">
+                                    <div t-if="record.pending_count.raw_value > 0" class="o_detail_item">
+                                        <span class="o_detail_label">Pendientes:</span>
+                                        <span class="o_detail_value badge badge-info">
+                                            <field name="pending_count"/>
+                                        </span>
+                                    </div>
+                                    <div t-if="record.delayed_count.raw_value > 0" class="o_detail_item">
+                                        <span class="o_detail_label">⚠️ Atrasados:</span>
+                                        <span class="o_detail_value badge badge-danger">
+                                            <field name="delayed_count"/>
+                                        </span>
+                                    </div>
+                                    <div t-if="record.completed_count.raw_value > 0" class="o_detail_item">
+                                        <span class="o_detail_label">✓ Completados:</span>
+                                        <span class="o_detail_value badge badge-success">
+                                            <field name="completed_count"/>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="o_kanban_footer">
+                                    <small>
+                                        <field name="period"/>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ESTILOS CSS PERSONALIZADOS -->
+    <template id="dashboard_kanban_css" name="Dashboard Kanban CSS">
+        <style>
+            .o_dashboard_kanban {
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            }
+            
+            .o_kanban_card_miniature {
+                background: white;
+                border-left: 4px solid #017e84;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                padding: 16px;
+                margin: 12px;
+                transition: all 0.3s ease;
+            }
+            
+            .o_kanban_card_miniature:hover {
+                box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+                transform: translateY(-2px);
+            }
+            
+            .o_kanban_card_critical {
+                border-left-color: #dc3545;
+                background: #fff5f5;
+            }
+            
+            .o_kanban_card_warning {
+                border-left-color: #ffc107;
+                background: #fffbf0;
+            }
+            
+            .o_kanban_card_success {
+                border-left-color: #28a745;
+                background: #f0fdf4;
+            }
+            
+            .oe_kanban_title {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 12px;
+            }
+            
+            .o_kanban_record_title {
+                margin: 0;
+                font-size: 16px;
+                font-weight: 600;
+                color: #333;
+            }
+            
+            .o_kanban_metrics {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: 12px 0;
+                padding: 12px 0;
+                border-top: 1px solid #eee;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .o_metric_value {
+                font-size: 24px;
+                font-weight: bold;
+                color: #017e84;
+            }
+            
+            .o_metric_label {
+                font-size: 14px;
+                color: #666;
+                margin-left: 4px;
+            }
+            
+            .o_progress_bar {
+                margin: 12px 0;
+            }
+            
+            .o_progress_bar .progress {
+                background-color: #e9ecef;
+                border-radius: 4px;
+            }
+            
+            .o_kanban_details {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                margin: 12px 0;
+                font-size: 12px;
+            }
+            
+            .o_detail_item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .o_detail_label {
+                color: #666;
+                font-weight: 500;
+            }
+            
+            .o_kanban_footer {
+                margin-top: 12px;
+                padding-top: 12px;
+                border-top: 1px solid #eee;
+                text-align: right;
+                color: #999;
+                font-size: 11px;
+            }
+        </style>
+    </template>
+
+</odoo>
