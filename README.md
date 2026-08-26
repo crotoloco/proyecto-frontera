@@ -34,6 +34,7 @@ python scripts\automatizar_cada_15_minutos.py
 - `reports/`: Excel, JSON y reportes generados.
 - `docs/`: documentacion adicional.
 - `dashboard.html`: dashboard de una sola pagina.
+- `inventario.html`: vista separada del catalogo de productos.
 - `images.jpg`: logo de Frontera Living.
 
 ## Requisitos
@@ -46,6 +47,19 @@ Instalacion:
 ```powershell
 python -m pip install -r requirements.txt
 ```
+
+## Vista de inventario
+
+Para generar la vista de productos desde un export `.xls`:
+
+```powershell
+python scripts\generar_inventario_html.py C:\ruta\product_template.xls
+```
+
+Esto genera `inventario.html` con los productos, referencias, tipo, precio y
+costo. El ranking de productos mas vendidos requiere un export de lineas de
+pedido que incluya producto y cantidad; el archivo de catalogo no contiene esa
+informacion.
 
 El dashboard funciona localmente y no depende de la API de Gemini.
 
