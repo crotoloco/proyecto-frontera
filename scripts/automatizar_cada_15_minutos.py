@@ -13,8 +13,12 @@ import time
 from datetime import datetime
 from pathlib import Path
 import subprocess
+import os
 
 import pandas as pd
+
+from normalizador import normalizar_ventas
+from odoo_connector import OdooConnector
 
 INTERVALO_SEGUNDOS = 15 * 60
 BASE_DIR = Path(__file__).resolve().parent
@@ -59,12 +63,47 @@ def actualizar_desde_archivo():
         return False
 
 
+def actualizar_desde_odoo():
+    """Obtiene ventas de Odoo y las guarda en el mismo CSV canónico."""
+    if os.getenv('ODOO_API_ENABLED', 'false').lower() not in {'1', 'true', 'si', 'yes'}:
+        return None
+
+    print('API de Odoo habilitada; intentando sincronizar...')
+    conector = OdooConnector()
+    if not conector.conectar():
+        print('Odoo no disponible; se conserva el último CSV válido.')
+        return False
+
+    ventas = conector.obtener_ventas()
+    if ventas is None:
+        print('Odoo no devolvió datos; se conserva el último CSV válido.')
+        return False
+
+    try:
+        datos = normalizar_ventas(ventas)
+        if datos.empty:
+            print('Odoo devolvió cero ventas; se conserva el último CSV válido.')
+            return False
+        datos.to_csv(CSV_CANONICO, index=False, encoding='utf-8-sig')
+        print(f'CSV actualizado desde Odoo: {len(datos)} filas')
+        return True
+    except (TypeError, ValueError, OSError) as error:
+        print(f'No se pudo normalizar la respuesta de Odoo: {error}')
+        print('Se conserva el último CSV válido.')
+        return False
+
+
 def ejecutar_automatizacion():
     print('\n' + '=' * 90)
     print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] Ejecutando flujo automático...')
     print('=' * 90)
 
-    if not actualizar_desde_archivo():
+    resultado_odoo = actualizar_desde_odoo()
+    if resultado_odoo is False:
+        if not CSV_CANONICO.exists():
+            print('No hay un CSV válido disponible para usar como respaldo.')
+            return 1
+    elif resultado_odoo is None and not actualizar_desde_archivo():
         return 1
 
     resultado = subprocess.run(

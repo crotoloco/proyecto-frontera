@@ -1,6 +1,5 @@
 import os
 import requests
-import json
 from dotenv import load_dotenv
 
 # Cargar variables de entorno desde .env
@@ -16,19 +15,45 @@ ODOO_PASSWORD = os.getenv('ODOO_PASSWORD')
 class OdooConnector:
     def __init__(self):
         """Inicializar la conexión a Odoo"""
-        self.url = ODOO_URL.rstrip('/')  # Quitar slash final si existe
+        self.url = (ODOO_URL or '').rstrip('/')
         self.db = ODOO_DB
         self.user = ODOO_USER
         self.password = ODOO_PASSWORD
         self.uid = None
         self.headers = {'Content-Type': 'application/json'}
+
+    def _validar_configuracion(self):
+        faltantes = [
+            nombre for nombre, valor in {
+                'ODOO_URL': self.url,
+                'ODOO_DB': self.db,
+                'ODOO_USER': self.user,
+                'ODOO_PASSWORD': self.password,
+            }.items() if not valor
+        ]
+        if faltantes:
+            raise ValueError(f'Faltan variables de entorno: {", ".join(faltantes)}')
+
+    def _llamar(self, payload):
+        self._validar_configuracion()
+        respuesta = requests.post(
+            f'{self.url}/jsonrpc',
+            json=payload,
+            headers=self.headers,
+            timeout=10,
+        )
+        respuesta.raise_for_status()
+        cuerpo = respuesta.json()
+        if cuerpo.get('error'):
+            raise RuntimeError('Odoo devolvió un error JSON-RPC')
+        return cuerpo.get('result')
     
     def conectar(self):
         """Conectar a Odoo y autenticarse usando JSON-RPC"""
         try:
+            self._validar_configuracion()
             print(f"✓ Conectando a: {self.url}")
             print(f"✓ Base de datos: {self.db}")
-            print(f"✓ Usuario: {self.user}")
             
             # Datos de autenticación
             datos_auth = {
@@ -43,35 +68,22 @@ class OdooConnector:
             }
             
             # Realizar solicitud de autenticación
-            respuesta = requests.post(
-                f'{self.url}/jsonrpc',
-                json=datos_auth,
-                headers=self.headers,
-                timeout=10
-            )
-            
-            if respuesta.status_code == 200:
-                resultado = respuesta.json()
+            resultado = self._llamar(datos_auth)
+            if resultado:
+                self.uid = resultado
+                print("✓ Autenticación exitosa")
+                return True
+            print("✗ Error de autenticación")
+            return False
                 
-                if 'result' in resultado and resultado['result']:
-                    self.uid = resultado['result']
-                    print(f"✓ Autenticación exitosa. UID: {self.uid}")
-                    return True
-                else:
-                    print(f"✗ Error de autenticación: {resultado.get('error', 'Desconocido')}")
-                    return False
-            else:
-                print(f"✗ Error HTTP {respuesta.status_code}")
-                return False
-                
-        except requests.exceptions.ConnectionError:
-            print(f"✗ Error: No se puede conectar a {self.url}")
+        except (requests.exceptions.RequestException, ValueError, RuntimeError) as error:
+            print(f"✗ Error de conexión: {error}")
             return False
         except Exception as e:
             print(f"✗ Error de conexión: {e}")
             return False
     
-    def obtener_ventas(self, limite=10):
+    def obtener_ventas(self, limite=None):
         """Obtener datos de ventas (sale.order)"""
         if not self.uid:
             print("✗ No estás conectado a Odoo. Ejecuta conectar() primero.")
@@ -85,22 +97,16 @@ class OdooConnector:
                 'params': {
                     'service': 'object',
                     'method': 'execute_kw',
-                    'args': [self.db, self.uid, self.password, 'sale.order', 'search', [], {'limit': limite}]
+                    'args': [
+                        self.db, self.uid, self.password, 'sale.order', 'search', [],
+                        {**({'limit': limite} if limite else {}), 'order': 'id desc'}
+                    ]
                 },
                 'id': 2
             }
             
-            respuesta_busqueda = requests.post(
-                f'{self.url}/jsonrpc',
-                json=datos_busqueda,
-                headers=self.headers,
-                timeout=10
-            )
-            
-            resultado_busqueda = respuesta_busqueda.json()
-            
-            if 'result' in resultado_busqueda:
-                ordenes_ids = resultado_busqueda['result']
+            ordenes_ids = self._llamar(datos_busqueda)
+            if ordenes_ids is not None:
                 
                 if ordenes_ids:
                     print(f"✓ Se encontraron {len(ordenes_ids)} órdenes de venta")
@@ -122,28 +128,11 @@ class OdooConnector:
                         'id': 3
                     }
                     
-                    respuesta_lectura = requests.post(
-                        f'{self.url}/jsonrpc',
-                        json=datos_lectura,
-                        headers=self.headers,
-                        timeout=10
-                    )
-                    
-                    resultado_lectura = respuesta_lectura.json()
-                    
-                    if 'result' in resultado_lectura:
-                        return resultado_lectura['result']
-                    else:
-                        print(f"✗ Error al leer datos: {resultado_lectura.get('error', 'Desconocido')}")
-                        return None
+                    return self._llamar(datos_lectura)
                 else:
                     print("✓ No se encontraron órdenes de venta")
                     return []
-            else:
-                print(f"✗ Error en búsqueda: {resultado_busqueda.get('error', 'Desconocido')}")
-                return None
-                
-        except Exception as e:
+        except (requests.exceptions.RequestException, ValueError, RuntimeError) as e:
             print(f"✗ Error al obtener ventas: {e}")
             return None
 
