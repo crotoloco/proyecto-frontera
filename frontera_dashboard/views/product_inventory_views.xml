@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de productos con existencias calculadas por Odoo -->
+    <record id="view_frontera_product_inventory_tree" model="ir.ui.view">
+        <field name="name">product.product.frontera.inventory.tree</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree string="Inventario de productos" create="false">
+                <field name="default_code"/>
+                <field name="name"/>
+                <field name="categ_id"/>
+                <field name="qty_available" sum="Total en stock"/>
+                <field name="free_qty" sum="Total disponible"/>
+                <field name="incoming_qty" sum="Total por recibir"/>
+                <field name="outgoing_qty" sum="Total por entregar"/>
+                <field name="uom_id"/>
+                <field name="list_price" widget="monetary"/>
+                <field name="standard_price" widget="monetary" groups="stock.group_stock_manager"/>
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_frontera_product_inventory_search" model="ir.ui.view">
+        <field name="name">product.product.frontera.inventory.search</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <search string="Buscar productos">
+                <field name="name"/>
+                <field name="default_code"/>
+                <field name="categ_id"/>
+                <separator/>
+                <filter name="filter_stock_low" string="Stock bajo" domain="[('qty_available', '&lt;=', 0)]"/>
+                <filter name="filter_incoming" string="Por recibir" domain="[('incoming_qty', '&gt;', 0)]"/>
+                <filter name="filter_outgoing" string="Por entregar" domain="[('outgoing_qty', '&gt;', 0)]"/>
+                <filter name="filter_active" string="Activos" domain="[('active', '=', True)]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_category" string="Categoría" context="{'group_by': 'categ_id'}"/>
+                    <filter name="group_uom" string="Unidad de medida" context="{'group_by': 'uom_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_frontera_product_inventory" model="ir.actions.act_window">
+        <field name="name">Inventario de productos</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_frontera_product_inventory_tree"/>
+        <field name="search_view_id" ref="view_frontera_product_inventory_search"/>
+        <field name="domain">[('active', '=', True)]</field>
+        <field name="context">{'search_default_filter_active': 1}</field>
+    </record>
+
+    <menuitem id="menu_frontera_product_inventory"
+              name="Inventario de productos"
+              parent="menu_frontera_dashboard_root"
+              action="action_frontera_product_inventory"
+              sequence="2"/>
+</odoo>

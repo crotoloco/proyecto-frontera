@@ -36,6 +36,7 @@ cp -r frontera_dashboard /ruta/a/tu/odoo/addons/
 - **Vista Kanban** (por defecto): Cards visuales con KPIs por categoría
 - **Vista de Lista**: Tabla con todos los datos
 - **Vista de Formulario**: Detalles completos de cada KPI
+- **Inventario de productos**: existencias, disponible, por recibir y por entregar
 
 ### Filtros y Búsqueda
 - Filtrar por **Categoría**: Ventas, Inventario, Producción, Reparaciones
@@ -80,6 +81,11 @@ self.create({
 - Recepciones en espera
 - Órdenes de entrega (con atrasados)
 - Traslados internos
+
+### Inventario de productos
+Desde **Frontera Dashboard > Inventario de productos** se pueden consultar los
+productos activos, su categoría, stock actual, unidades disponibles, entradas
+esperadas y salidas pendientes. Los valores son los campos calculados por Odoo.
 
 ### Producción
 - Órdenes de producción (en espera y atrasadas)

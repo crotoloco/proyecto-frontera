@@ -16,6 +16,7 @@
         'security/ir.model.access.csv',
         'views/dashboard_views.xml',
         'views/dashboard_kanban.xml',
+        'views/product_inventory_views.xml',
         'data/ir_actions_server.xml',
     ],
     'installable': True,
