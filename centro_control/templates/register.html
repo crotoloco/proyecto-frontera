@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Crear cuenta - Centro de Control</title>
+  <style>
+    *{box-sizing:border-box}
+    body{font-family:Segoe UI,Arial,sans-serif;background:#f4f7f6;color:#172a2b;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:20px}
+    .card{background:#fff;padding:28px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.08);width:360px}
+    input{width:100%;padding:10px;margin:8px 0;border:1px solid #d6e2dc;border-radius:8px}
+    button{width:100%;padding:10px;background:#087c78;color:#fff;border:0;border-radius:8px;font-weight:700;cursor:pointer}
+    .error{color:#a13f36;margin-bottom:12px}
+    a{color:#087c78;text-decoration:none}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Crear cuenta</h2>
+    {% if error %}<div class="error">{{ error }}</div>{% endif %}
+    <form method="post">
+      <input type="hidden" name="next" value="{{ next }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Usuario<input type="text" name="username" minlength="3" required autofocus></label>
+      <label>Contraseña<input type="password" name="password" minlength="6" required></label>
+      <label>Repetir contraseña<input type="password" name="password_confirmation" minlength="6" required></label>
+      <button type="submit">Crear cuenta</button>
+    </form>
+    <p style="margin-top:16px;font-size:14px;text-align:center"><a href="{{ url_for('login', next=next) }}">Volver al inicio de sesión</a></p>
+  </div>
+</body>
+</html>

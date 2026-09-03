@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Detalle de carga</title>
+  <style>
+	body{font-family:Segoe UI,Arial,sans-serif;background:#f6fbf9;color:#172a2b;margin:0;padding:24px}
+	main{max-width:1050px;margin:auto}
+	header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+	pre{background:#fff;border:1px solid #d6e2dc;padding:12px;white-space:pre-wrap;word-break:break-word}
+	table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #d6e2dc;margin-bottom:18px}
+	th,td{padding:10px 12px;border-bottom:1px solid #e6efe9;text-align:left;font-size:13px}
+	th{background:#f5f9f6;color:#667779}
+	a{color:#087c78;text-decoration:none}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+	<h1>Informe del procesamiento</h1>
+	<nav><a href="{{ url_for('index') }}">Centro de Control</a> · <a href="{{ url_for('history') }}">Historial</a></nav>
+  </header>
+
+  <section>
+	<div style="display:flex;gap:12px;margin-bottom:12px">
+	  <a href="#alertas" style="background:#d59b3d;color:#fff;padding:10px 14px;border-radius:8px;font-weight:700">Alertas y avisos</a>
+	  <a href="{{ url_for('dashboard_with_alerts') }}" style="background:#087c78;color:#fff;padding:10px 14px;border-radius:8px;font-weight:700">Ventas y alertas</a>
+	  <a href="{{ url_for('dashboard') }}" style="background:#087c78;color:#fff;padding:10px 14px;border-radius:8px;font-weight:700">Dashboard de ventas</a>
+	  <a href="{{ url_for('inventario') }}" style="background:#087c78;color:#fff;padding:10px 14px;border-radius:8px;font-weight:700">Inventario</a>
+		<form method="post" action="/centro_control/history/{{ upload['id'] }}/reprocess" style="display:inline">
+		<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+		<button type="submit" style="background:#087c78;color:#fff;padding:8px 12px;border-radius:8px;border:0;cursor:pointer">Reprocesar</button>
+	  </form>
+		<form method="post" action="/centro_control/history/{{ upload['id'] }}/delete" style="display:inline" onsubmit="return confirm('Eliminar esta carga y sus logs? Esta acción no se puede deshacer.')">
+		<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+		<button type="submit" style="background:#a13f36;color:#fff;padding:8px 12px;border-radius:8px;border:0;cursor:pointer">Eliminar</button>
+	  </form>
+	</div>
+	<table>
+	  <tr><th>Archivo</th><td>{{ upload['nombre_original'] }}</td></tr>
+	  <tr><th>Guardado</th>
+		<td>
+		  {% if file_info.exists %}
+			<a href="{{ url_for('uploaded_file', nombre=upload['nombre_guardado']) }}">Descargar</a>
+			· {{ file_info.size_hr }} · {{ file_info.mtime_dt }}
+		  {% else %}
+			Archivo no disponible
+		  {% endif %}
+		</td>
+	  </tr>
+	  <tr><th>Tipo</th><td>{{ upload['tipo'] or '-' }}</td></tr>
+	  <tr><th>Registros</th><td>{{ upload['filas'] }}</td></tr>
+	  <tr><th>Columnas</th><td>{{ upload['columnas'] }}</td></tr>
+	  <tr><th>Errores</th><td>{{ upload['errores'] }}</td></tr>
+	  <tr><th>Fecha (UTC)</th><td>{{ upload['timestamp'] }}</td></tr>
+	</table>
+  </section>
+
+  <section>
+	<h2>Resumen del archivo</h2>
+	<div style="background:#e7f6ee;border:1px solid #b8dec8;padding:14px;margin-bottom:12px">
+	  {% if processing_ok %}<strong>Procesamiento completado correctamente</strong>{% else %}<strong style="color:#a13f36">El procesamiento más reciente terminó con errores</strong>{% endif %}
+	  <div style="margin-top:6px">{{ upload['filas'] }} registros y {{ upload['columnas'] }} columnas procesados como {{ upload['tipo'] or 'archivo' }}.</div>
+	</div>
+	{% if upload['errores'] %}<div style="background:#fff4df;border:1px solid #ead3a4;padding:12px"><strong>Avisos de validación</strong><div style="margin-top:6px">{{ upload['errores'] }}</div></div>{% endif %}
+  </section>
+
+
+	<section id="alertas">
+	<h2>Alertas y avisos</h2>
+	{% if alerts %}
+	  {% for alert in alerts %}
+		<article style="background:#fff4df;border:1px solid #ead3a4;padding:12px;margin-bottom:10px">
+		  <strong>{{ alert['tipo_alerta'] }}</strong>
+		  <div style="margin-top:6px">{{ alert['mensaje'] }}</div>
+		  <small>{{ alert['timestamp'] }}{% if alert['ack'] %} · Aviso leído{% else %} · Pendiente{% endif %}</small>
+		</article>
+	  {% endfor %}
+	{% else %}<p>No se detectaron alertas automáticas para esta carga.</p>{% endif %}
+	<p><a href="{{ url_for('alerts_list') }}">Abrir apartado de todos los avisos</a></p>
+  </section>
+
+  <section>
+	<h2>Resultados generados</h2>
+	<p>
+	  <a href="{{ url_for('dashboard') }}">Ver dashboard de ventas</a> ·
+	  <a href="{{ url_for('dashboard_with_alerts') }}">Ver ventas y alertas</a> ·
+	  <a href="{{ url_for('inventario') }}">Ver inventario generado</a>
+	  · <a href="{{ url_for('history') }}">Volver al historial</a>
+	</p>
+  </section>
+
+  <section>
+	<h2>Logs de ejecución</h2>
+	{% if logs %}
+	  {% for log in logs %}
+		<article style="margin-bottom:18px">
+		  <h3>Ejecución {{ log['id'] }} — código {{ log['returncode'] }} — {{ log['timestamp'] }}</h3>
+		  <p><strong>STDOUT</strong></p>
+			{% if upload['tipo'] == 'INVENTARIO' and log['returncode'] == 0 %}
+			  <div style="background:#e7f6ee;border:1px solid #b8dec8;padding:12px">Inventario generado correctamente. El archivo está listo para consultar.</div>
+			{% else %}
+			  <pre>{{ log['stdout'] }}</pre>
+			{% endif %}
+		  <p><strong>STDERR</strong></p>
+		  <pre>{{ log['stderr'] }}</pre>
+		</article>
+	  {% endfor %}
+	{% else %}
+	  <p>No hay registros de ejecución para esta carga.</p>
+	{% endif %}
+  </section>
+
+  <section>
+	<h2>Descargas (auditoría)</h2>
+	{% if downloads %}
+	  <table>
+		<tr><th>ID</th><th>Archivo</th><th>IP</th><th>User-Agent</th><th>Fecha (UTC)</th></tr>
+		{% for d in downloads %}
+		  <tr>
+			<td>{{ d['id'] }}</td>
+			<td>{{ d['filename'] }}</td>
+			<td>{{ d['client_ip'] or '-' }}</td>
+			<td style="max-width:480px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ d['user_agent'] or '-' }}</td>
+			<td>{{ d['timestamp'] }}</td>
+		  </tr>
+		{% endfor %}
+	  </table>
+	{% else %}
+	  <p>No se registraron descargas para esta carga.</p>
+	{% endif %}
+  </section>
+</main>
+</body>
+</html>

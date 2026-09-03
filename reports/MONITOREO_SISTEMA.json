@@ -1,0 +1,418 @@
+{
+  "ultima_ejecucion": {
+    "fecha": "2026-09-03T10:58:17",
+    "estado": "OK",
+    "fuente": "archivo",
+    "registros": 80,
+    "duracion_segundos": 17.96,
+    "error": ""
+  },
+  "ultima_sincronizacion_exitosa": "2026-09-03T10:58:17",
+  "fuente_utilizada": "archivo",
+  "cantidad_registros": 80,
+  "estado_odoo": "NO APLICA",
+  "estado_procesamiento": "OK",
+  "estado_dashboard": "OK",
+  "historial": [
+    {
+      "fecha": "2026-08-27T08:54:24",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 4.03,
+      "error": ""
+    },
+    {
+      "fecha": "2026-08-27T10:16:44",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 4.99,
+      "error": ""
+    },
+    {
+      "fecha": "2026-08-28T11:30:46",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 9.8,
+      "error": ""
+    },
+    {
+      "fecha": "2026-08-31T09:11:08",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 3.93,
+      "error": ""
+    },
+    {
+      "fecha": "2026-08-31T09:26:14",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 5.83,
+      "error": ""
+    },
+    {
+      "fecha": "2026-08-31T09:41:18",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 3.24,
+      "error": ""
+    },
+    {
+      "fecha": "2026-08-31T09:56:20",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 2.91,
+      "error": ""
+    },
+    {
+      "fecha": "2026-08-31T10:11:30",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 9.03,
+      "error": ""
+    },
+    {
+      "fecha": "2026-08-31T10:26:33",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 3.29,
+      "error": ""
+    },
+    {
+      "fecha": "2026-08-31T10:41:38",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 5.25,
+      "error": ""
+    },
+    {
+      "fecha": "2026-08-31T10:56:47",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 8.34,
+      "error": ""
+    },
+    {
+      "fecha": "2026-08-31T11:11:55",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 8.22,
+      "error": ""
+    },
+    {
+      "fecha": "2026-08-31T11:26:58",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 2.89,
+      "error": ""
+    },
+    {
+      "fecha": "2026-08-31T11:42:01",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 3.21,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-01T08:32:23",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 307.84,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-01T08:48:16",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 52.24,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-01T09:03:21",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 4.67,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-01T09:18:29",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 8.15,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-01T09:33:33",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 4.04,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-01T09:48:44",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 11.12,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-01T10:04:52",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 66.4,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-01T10:20:04",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 12.03,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-01T11:11:06",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 3.41,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-01T11:26:12",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 5.51,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-01T11:41:15",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 2.78,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-02T08:41:11",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 5.0,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-02T08:56:18",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 6.55,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-02T09:11:21",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 2.97,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-02T09:26:25",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 3.52,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-02T09:41:28",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 3.1,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-02T09:56:31",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 3.36,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-02T10:11:39",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 7.61,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-02T10:26:45",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 5.69,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-02T10:41:49",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 3.38,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-02T10:56:59",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 9.97,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-02T11:12:02",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 3.49,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-02T11:27:05",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 2.54,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-02T11:42:08",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 2.59,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-02T11:58:11",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 63.61,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-03T08:26:11",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 5.69,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-03T08:41:17",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 6.79,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-03T08:56:28",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 10.67,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-03T09:11:35",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 6.72,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-03T09:27:13",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 37.14,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-03T09:42:17",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 3.54,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-03T09:57:19",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 2.37,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-03T10:12:23",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 3.55,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-03T10:27:42",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 18.86,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-03T10:42:59",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 16.91,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-03T10:58:17",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 17.96,
+      "error": ""
+    }
+  ]
+}

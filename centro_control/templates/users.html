@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Gestión de usuarios</title>
+  <style>
+	body{font-family:Segoe UI,Arial,sans-serif;background:#f6fbf9;color:#172a2b;margin:0;padding:24px}
+	main{max-width:900px;margin:auto}
+	table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #d6e2dc}
+	th,td{padding:10px 12px;border-bottom:1px solid #e6efe9;text-align:left}
+	th{background:#f5f9f6;color:#667779}
+	a.button{background:#087c78;color:#fff;padding:6px 10px;border-radius:6px;text-decoration:none}
+	form.inline{display:inline}
+  </style>
+</head>
+<body>
+<main>
+  <header style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+	<h1>Usuarios</h1>
+	<a href="/centro_control/users/create" class="button">Crear usuario</a>
+  </header>
+  <section>
+	<table>
+	  <thead><tr><th>ID</th><th>Usuario</th><th>Admin</th><th>Acciones</th></tr></thead>
+	  <tbody>
+		{% for u in users %}
+		<tr>
+		  <td>{{ u['id'] }}</td>
+		  <td>{{ u['username'] }}</td>
+		  <td>{{ 'Sí' if u['is_admin'] else 'No' }}</td>
+		  <td>
+			<a href="/centro_control/users/{{ u['username'] }}/password">Cambiar contraseña</a>
+			&nbsp;·&nbsp;
+			<form class="inline" method="post" action="/centro_control/users/{{ u['username'] }}/delete" onsubmit="return confirm('Eliminar usuario?')">
+			  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+			  <button type="submit" style="background:#a13f36;color:#fff;border:0;padding:6px 10px;border-radius:6px;cursor:pointer">Eliminar</button>
+			</form>
+		  </td>
+		</tr>
+		{% else %}
+		<tr><td colspan="4">No hay usuarios.</td></tr>
+		{% endfor %}
+	  </tbody>
+	</table>
+  </section>
+</main>
+</body>
+</html>

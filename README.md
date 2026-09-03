@@ -29,12 +29,15 @@ python scripts\automatizar_cada_15_minutos.py
 
 ## Carpetas
 
+- `centro_control/`: futura aplicación Flask para uso desde navegador.
+- `sistema_actual/`: documentación del núcleo actual que se conserva compatible.
 - `data/`: archivos de entrada exportados desde Odoo.
 - `scripts/`: programas Python.
 - `reports/`: Excel, JSON y reportes generados.
 - `docs/`: documentacion adicional.
 - `dashboard.html`: dashboard de una sola pagina.
 - `inventario.html`: vista separada del catalogo de productos.
+- `monitor.html`: centro de control con estado e historial de ejecuciones.
 - `images.jpg`: logo de Frontera Living.
 
 ## Requisitos
@@ -62,6 +65,12 @@ pedido que incluya producto y cantidad; el archivo de catalogo no contiene esa
 informacion.
 
 El dashboard funciona localmente y no depende de la API de Gemini.
+
+## Centro de control
+
+Cada ejecución actualiza `reports/MONITOREO_SISTEMA.json` y genera
+`monitor.html` con el estado general, la fuente utilizada, la cantidad de
+registros, la duración, los errores y el historial reciente.
 
 ## Conexion opcional con Odoo
 

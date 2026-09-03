@@ -18,3 +18,13 @@ logs/
 # Archivos temporales del sistema
 .DS_Store
 Thumbs.db
+.tools/
+.vs/
+app_log.txt
+fetch_log.txt
+tmp_*.html
+
+# Base de datos local y uploads de la aplicación
+centro_control/centro_control.db
+centro_control/uploads/
+*.db

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard - Centro de Control</title>
+  <style>
+	body{font-family:Segoe UI,Arial,sans-serif;margin:0;padding:18px;color:#172a2b;background:#f6faf8}
+	header{display:flex;justify-content:space-between;align-items:center}
+	.alerts{margin:18px 0}
+	.alert{background:#fff;padding:12px;border-radius:8px;border:1px solid #e6efe9;margin-bottom:10px}
+	.alert h4{margin:0 0 6px 0}
+	.meta{color:#667779;font-size:12px}
+	.actions{margin-top:8px}
+	button{background:#087c78;color:#fff;border:0;padding:8px 12px;border-radius:8px;cursor:pointer}
+  </style>
+</head>
+<body>
+  <header>
+	<div><h1>Alertas y avisos</h1><div class="meta">Avisos recientes del Centro de Control</div></div>
+	<nav><a href="/">Inicio</a> · <a href="/dashboard.html">Dashboard de ventas</a></nav>
+  </header>
+  <section class="alerts">
+	{% if alerts %}
+	  {% for a in alerts %}
+		<div class="alert">
+		  <h4>{{ a['tipo_alerta'] }}</h4>
+		  <div class="meta">Subida: {{ a['upload_id'] }} · {{ a['timestamp'] }}</div>
+		  <p>{{ a['mensaje'] }}</p>
+		  <div class="actions"><form method="post" action="/centro_control/alerts/{{ a['id'] }}/ack"><button type="submit">Marcar como leída</button></form></div>
+		</div>
+	  {% endfor %}
+	{% else %}
+	  <div class="alert"><p>No hay alertas pendientes.</p></div>
+	{% endif %}
+  </section>
+</body>
+</html>

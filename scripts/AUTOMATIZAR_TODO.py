@@ -33,6 +33,19 @@ REPORTS_DIR = PROJECT_DIR / 'reports'
 CSV_PATH = DATA_DIR / 'Orden de venta (sale.order).csv'
 REPORTS_DIR.mkdir(exist_ok=True)
 
+# Forzar UTF-8 en stdout/stderr cuando sea posible (evita errores de 'charmap' en Windows)
+try:
+    os.environ.setdefault('PYTHONIOENCODING', 'utf-8')
+    os.environ.setdefault('PYTHONUTF8', '1')
+    if hasattr(sys.stdout, 'reconfigure'):
+        try:
+            sys.stdout.reconfigure(encoding='utf-8')
+            sys.stderr.reconfigure(encoding='utf-8')
+        except Exception:
+            pass
+except Exception:
+    pass
+
 # Colores para terminal
 VERDE = '\033[92m'
 AZUL = '\033[94m'
@@ -393,16 +406,20 @@ def main():
         return
     
     # Paso 3
-    generar_excel(df)
+    if not generar_excel(df):
+        return 1
     
     # Paso 4
-    generar_reporte_ejecutivo(df)
+    if not generar_reporte_ejecutivo(df):
+        return 1
     
     # Paso 5
-    generar_json(df)
+    if not generar_json(df):
+        return 1
     
     # Paso 6
-    verificar_dashboard()
+    if not verificar_dashboard():
+        return 1
     
     # Paso 7
     mostrar_resumen()
@@ -415,7 +432,7 @@ def main():
 
 if __name__ == "__main__":
     try:
-        main()
+        raise SystemExit(main() or 0)
     except KeyboardInterrupt:
         print(f"\n{AMARILLO}Proceso interrumpido por el usuario{RESET}\n")
     except Exception as e:

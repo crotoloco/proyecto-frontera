@@ -19,6 +19,7 @@ import pandas as pd
 
 from normalizador import normalizar_ventas
 from odoo_connector import OdooConnector
+from monitor_sistema import registrar_ejecucion
 
 INTERVALO_SEGUNDOS = 15 * 60
 BASE_DIR = Path(__file__).resolve().parent
@@ -35,6 +36,7 @@ def actualizar_desde_archivo():
         archivo for archivo in DATA_DIR.iterdir()
         if archivo.suffix.lower() in {'.csv', '.xlsx'}
         and archivo.name != CSV_CANONICO.name
+        and 'Orden de venta' in archivo.name
         and not archivo.name.startswith('~$')
     ]
 
@@ -50,9 +52,10 @@ def actualizar_desde_archivo():
             datos = pd.read_excel(archivo_nuevo)
         else:
             datos = pd.read_csv(archivo_nuevo, encoding='utf-8-sig')
+        datos = normalizar_ventas(datos)
         if datos.empty:
             print('El archivo está vacío; se conserva el CSV actual.')
-            return False
+            return CSV_CANONICO.exists()
 
         datos.to_csv(CSV_CANONICO, index=False, encoding='utf-8-sig')
         print(f'CSV actualizado desde Excel: {len(datos)} filas')
@@ -60,7 +63,7 @@ def actualizar_desde_archivo():
     except Exception as error:
         print(f'No se pudo leer el archivo todavía: {error}')
         print('Puede estar copiándose. Se conserva el CSV actual para el próximo ciclo.')
-        return False
+        return CSV_CANONICO.exists()
 
 
 def actualizar_desde_odoo():
@@ -94,30 +97,51 @@ def actualizar_desde_odoo():
 
 
 def ejecutar_automatizacion():
+    inicio = datetime.now()
+    fuente = 'odoo' if os.getenv('ODOO_API_ENABLED', 'false').lower() in {'1', 'true', 'si', 'yes'} else 'archivo'
+    procesamiento = 'ERROR'
+    error = ''
     print('\n' + '=' * 90)
     print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] Ejecutando flujo automático...')
     print('=' * 90)
 
-    resultado_odoo = actualizar_desde_odoo()
-    if resultado_odoo is False:
-        if not CSV_CANONICO.exists():
-            print('No hay un CSV válido disponible para usar como respaldo.')
+    try:
+        resultado_odoo = actualizar_desde_odoo()
+        if resultado_odoo is False:
+            fuente = 'fallback_csv'
+            if not CSV_CANONICO.exists():
+                error = 'No hay un CSV válido disponible para usar como respaldo.'
+                print(error)
+                return 1
+        elif resultado_odoo is None and not actualizar_desde_archivo():
+            error = 'No se pudo actualizar desde un archivo y no existe respaldo válido.'
+            print(error)
             return 1
-    elif resultado_odoo is None and not actualizar_desde_archivo():
+
+        resultado = subprocess.run(
+            [sys.executable, str(SCRIPT_PRINCIPAL)],
+            cwd=str(PROJECT_DIR),
+            check=False,
+        )
+        if resultado.returncode == 0:
+            procesamiento = 'OK'
+            print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] Flujo finalizado correctamente.')
+        else:
+            error = f'El flujo falló con código: {resultado.returncode}'
+            print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] {error}')
+        return resultado.returncode
+    except Exception as exception:
+        error = str(exception)
+        print(f'Error inesperado en el automatizador: {error}')
         return 1
-
-    resultado = subprocess.run(
-        [sys.executable, str(SCRIPT_PRINCIPAL)],
-        cwd=str(PROJECT_DIR),
-        check=False,
-    )
-
-    if resultado.returncode == 0:
-        print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] Flujo finalizado correctamente.')
-    else:
-        print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] El flujo falló con código: {resultado.returncode}')
-
-    return resultado.returncode
+    finally:
+        registrar_ejecucion(
+            inicio=inicio,
+            fuente=fuente,
+            codigo=0 if procesamiento == 'OK' else 1,
+            procesamiento=procesamiento,
+            error=error,
+        )
 
 
 def main():

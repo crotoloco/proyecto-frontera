@@ -14,6 +14,7 @@ COLUMNAS_REQUERIDAS = (
     'Fecha de creación',
     'Referencia de la orden',
     'Total',
+    'Términos de pago',
     'Vendedor',
 )
 
@@ -39,11 +40,12 @@ def normalizar_ventas(registros: Iterable[dict[str, Any]] | pd.DataFrame) -> pd.
         'date_order': 'Fecha de creación',
         'name': 'Referencia de la orden',
         'user_id': 'Vendedor',
+        'payment_term_id': 'Términos de pago',
         'state': 'Estado',
     }
     df = df.rename(columns=renombres)
 
-    for columna in ('Cliente', 'Vendedor'):
+    for columna in ('Cliente', 'Vendedor', 'Términos de pago'):
         if columna in df:
             df[columna] = df[columna].map(_nombre_relacionado)
 

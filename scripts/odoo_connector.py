@@ -122,7 +122,10 @@ class OdooConnector:
                                 self.db, self.uid, self.password, 
                                 'sale.order', 'read', 
                                 [ordenes_ids],
-                                {'fields': ['id', 'name', 'partner_id', 'amount_total', 'state', 'date_order']}
+                                {'fields': [
+                                    'id', 'name', 'partner_id', 'amount_total', 'state',
+                                    'date_order', 'user_id', 'payment_term_id',
+                                ]}
                             ]
                         },
                         'id': 3

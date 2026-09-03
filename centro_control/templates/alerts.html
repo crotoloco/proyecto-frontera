@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Alertas - Centro de Control</title>
+  <style>
+	body{font-family:Segoe UI,Arial,sans-serif;padding:20px;color:#172a2b}
+	.card{background:#fff;padding:18px;border-radius:10px;border:1px solid #e6efe9}
+	.alert{padding:12px;border-radius:8px;margin-bottom:10px}
+	.alert h4{margin:0 0 6px 0}
+	.meta{color:#667779;font-size:13px}
+	.actions{margin-top:8px}
+	button{background:#087c78;color:#fff;border:0;padding:8px 12px;border-radius:8px;cursor:pointer}
+  </style>
+</head>
+<body>
+  <main>
+	<h1>Alertas y avisos</h1>
+	<p><a href="{{ url_for('index') }}">Volver al Centro de Control</a> · <a href="{{ url_for('dashboard_with_alerts') }}">Ver ventas y alertas</a></p>
+	<div class="card">
+	  {% if alerts %}
+		{% for a in alerts %}
+		  <div class="alert">
+			<h4>{{ a['tipo_alerta'] }}</h4>
+			<div class="meta">Subida: {{ a['upload_id'] or '—' }} · {{ a['timestamp'] }}</div>
+			<p>{{ a['mensaje'] }}</p>
+			<div class="actions">
+			  {% if a['upload_id'] %}
+				<a href="{{ url_for('history_detail', upload_id=a['upload_id']) }}">Ver detalle</a>
+				&nbsp;·&nbsp;
+			  {% endif %}
+			  <form method="post" action="/centro_control/alerts/{{ a['id'] }}/ack" style="display:inline">
+				<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+				<button type="submit">Marcar como leída</button>
+			  </form>
+			</div>
+		  </div>
+		{% endfor %}
+	  {% else %}
+		<p>No hay alertas pendientes.</p>
+	  {% endif %}
+	</div>
+  </main>
+</body>
+</html>

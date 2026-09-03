@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Historial de cargas - Centro de Control</title>
+  <style>
+	body{font-family:Segoe UI,Arial,sans-serif;background:#f6fbf9;color:#172a2b;margin:0;padding:24px}
+	main{max-width:1050px;margin:auto}
+	header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+	table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #d6e2dc}
+	th,td{padding:10px 12px;border-bottom:1px solid #e6efe9;text-align:left;font-size:13px}
+	th{background:#f5f9f6;color:#667779}
+	a{color:#087c78;text-decoration:none}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+	<h1>Historial de cargas</h1>
+	<nav><a href="/centro_control">Volver</a></nav>
+  </header>
+	<section>
+	<table>
+	  <thead>
+		<tr><th>ID</th><th>Fecha (UTC)</th><th>Archivo</th><th>Tipo</th><th>Registros</th><th>Columnas</th><th>Errores</th><th>Acciones</th></tr>
+	  </thead>
+	  <tbody>
+		{% for row in uploads %}
+		<tr>
+		  <td><a href="/centro_control/history/{{ row['id'] }}">{{ row['id'] }}</a></td>
+		  <td>{{ row['timestamp'] }}</td>
+		  <td>{{ row['nombre_original'] }}</td>
+		  <td>{{ row['tipo'] or '-' }}</td>
+		  <td>{{ row['filas'] }}</td>
+		  <td>{{ row['columnas'] }}</td>
+		  <td>{{ row['errores'] }}</td>
+		  <td>
+			{% if row['nombre_guardado'] %}
+			  <a href="{{ url_for('uploaded_file', nombre=row['nombre_guardado']) }}">Descargar</a>
+			  &nbsp;·&nbsp;
+			{% endif %}
+			<a href="/centro_control/history/{{ row['id'] }}">Detalle</a>
+			{% if downloads_map and row['id'] in downloads_map %}
+			  <div style="font-size:12px;color:#667779;margin-top:6px">Descargas: {{ downloads_map[row['id']] }}</div>
+			{% endif %}
+		  </td>
+		</tr>
+		{% else %}
+		<tr><td colspan="8">No hay registros.</td></tr>
+		{% endfor %}
+	  </tbody>
+	</table>
+  </section>
+</main>
+</body>
+</html>
