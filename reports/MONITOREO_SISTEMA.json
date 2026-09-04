@@ -1,43 +1,19 @@
 {
   "ultima_ejecucion": {
-    "fecha": "2026-09-03T10:58:17",
+    "fecha": "2026-09-03T11:43:27",
     "estado": "OK",
     "fuente": "archivo",
     "registros": 80,
-    "duracion_segundos": 17.96,
+    "duracion_segundos": 2.39,
     "error": ""
   },
-  "ultima_sincronizacion_exitosa": "2026-09-03T10:58:17",
+  "ultima_sincronizacion_exitosa": "2026-09-03T11:43:27",
   "fuente_utilizada": "archivo",
   "cantidad_registros": 80,
   "estado_odoo": "NO APLICA",
   "estado_procesamiento": "OK",
   "estado_dashboard": "OK",
   "historial": [
-    {
-      "fecha": "2026-08-27T08:54:24",
-      "estado": "OK",
-      "fuente": "archivo",
-      "registros": 80,
-      "duracion_segundos": 4.03,
-      "error": ""
-    },
-    {
-      "fecha": "2026-08-27T10:16:44",
-      "estado": "OK",
-      "fuente": "archivo",
-      "registros": 80,
-      "duracion_segundos": 4.99,
-      "error": ""
-    },
-    {
-      "fecha": "2026-08-28T11:30:46",
-      "estado": "OK",
-      "fuente": "archivo",
-      "registros": 80,
-      "duracion_segundos": 9.8,
-      "error": ""
-    },
     {
       "fecha": "2026-08-31T09:11:08",
       "estado": "OK",
@@ -412,6 +388,30 @@
       "fuente": "archivo",
       "registros": 80,
       "duracion_segundos": 17.96,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-03T11:13:20",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 3.71,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-03T11:28:24",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 3.89,
+      "error": ""
+    },
+    {
+      "fecha": "2026-09-03T11:43:27",
+      "estado": "OK",
+      "fuente": "archivo",
+      "registros": 80,
+      "duracion_segundos": 2.39,
       "error": ""
     }
   ]
